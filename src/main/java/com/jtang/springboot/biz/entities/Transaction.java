@@ -14,7 +14,7 @@ import java.sql.Date;
 //Notes (personal notes)
 //Workbook id/tax season
 
-public class Transaction {
+public class Transaction { // each row in the rawdata table
 	
 	private int id;
 	private String source;
