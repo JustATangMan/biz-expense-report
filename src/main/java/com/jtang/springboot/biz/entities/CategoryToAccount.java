@@ -6,41 +6,36 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-//Id
-//Name
-//Description
-
 @Entity
-public class Business {
-	
+public class CategoryToAccount {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="business_id")
+	@Column(name="cat_to_acc_id")
 	private int id;
-	@Column(name="business_name")
-	private String name;
-	@Column(name="business_description")
-	private String description;
+	@Column(name="category_id")
+	private int categoryId;
+	@Column(name="account_id")
+	private int accountId;
 	@Column(name="tax_season")
 	private int taxSeason;
-
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public int getCategory_id() {
+		return categoryId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCategory_id(int category_id) {
+		this.categoryId = category_id;
 	}
-	public String getDescription() {
-		return description;
+	public int getAccount_id() {
+		return accountId;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAccount_id(int account_id) {
+		this.accountId = account_id;
 	}
 	public int getTaxSeason() {
 		return taxSeason;
