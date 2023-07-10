@@ -2,6 +2,13 @@ package com.jtang.springboot.biz.entities;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 //unique ID (incremental)
 //Source (BOFA, costco)
 //Date
@@ -14,19 +21,34 @@ import java.sql.Date;
 //Notes (personal notes)
 //Workbook id/tax season
 
-public class Transaction {
+@Entity
+@Table(name="transactions")
+public class Transaction { // each row in the rawdata table
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String source;
 	private Date date;
 	private String description;
 	private Double amount;
+	
+	@Column(name="adjusted_amount")
 	private Double adjustedAmount;
-	private int category_ID;
-	private int business_ID;
-	private int account_ID;
+	
+	@Column(name="category_id")
+	private int categoryId;
+	
+	@Column(name="business_id")
+	private int businessId;
+	
+	@Column(name="account_id")
+	private int accountId;
+	
 	private String notes;
-	private int taxSeason;
+	
+	@Column(name="tax_season_id")
+	private int taxSeasonId;
 	
 	public int getId() {
 		return id;
@@ -64,23 +86,23 @@ public class Transaction {
 	public void setAdjustedAmount(Double adjustedAmount) {
 		this.adjustedAmount = adjustedAmount;
 	}
-	public int getCategory_ID() {
-		return category_ID;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_ID(int category_ID) {
-		this.category_ID = category_ID;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	public int getBusiness_ID() {
-		return business_ID;
+	public int getBusinessId() {
+		return businessId;
 	}
-	public void setBusiness_ID(int business_ID) {
-		this.business_ID = business_ID;
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
 	}
-	public int getAccount_ID() {
-		return account_ID;
+	public int getAccountId() {
+		return accountId;
 	}
-	public void setAccount_ID(int account_ID) {
-		this.account_ID = account_ID;
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 	public String getNotes() {
 		return notes;
@@ -89,10 +111,10 @@ public class Transaction {
 		this.notes = notes;
 	}
 	public int getTaxSeason() {
-		return taxSeason;
+		return taxSeasonId;
 	}
 	public void setTaxSeason(int taxSeason) {
-		this.taxSeason = taxSeason;
+		this.taxSeasonId = taxSeason;
 	}
-
+	
 }
