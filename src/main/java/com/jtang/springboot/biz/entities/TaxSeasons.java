@@ -7,50 +7,53 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-//Id
-//Name
-//Description
-
 @Entity
-@Table(name="categories")
-public class Category {
+@Table(name="tax_seasons")
+public class TaxSeasons { //create another table to store the "identifier" (tax season)
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id")
-	private int id;	
-	
-	@Column(name="category_name")
-	private String name;
-	
-	@Column(name="category_description")
-	private String description;
-	
 	@Column(name="tax_season_id")
 	private int taxSeasonId;
 	
-	public int getId() {
-		return id;
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="year")
+	private int year;
+	
+	@Column(name="description")
+	private String description;
+
+	public int getTaxSeasonId() {
+		return taxSeasonId;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setTaxSeasonId(int taxSeasonId) {
+		this.taxSeasonId = taxSeasonId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public int getTaxSeason() {
-		return taxSeasonId;
-	}
-	public void setTaxSeason(int taxSeason) {
-		this.taxSeasonId = taxSeason;
 	}
 }

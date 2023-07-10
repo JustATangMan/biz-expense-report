@@ -32,17 +32,23 @@ public class Transaction { // each row in the rawdata table
 	private Date date;
 	private String description;
 	private Double amount;
+	
 	@Column(name="adjusted_amount")
 	private Double adjustedAmount;
+	
 	@Column(name="category_id")
 	private int categoryId;
+	
 	@Column(name="business_id")
 	private int businessId;
+	
 	@Column(name="account_id")
 	private int accountId;
+	
 	private String notes;
-	@Column(name="tax_season")
-	private int taxSeason;
+	
+	@Column(name="tax_season_id")
+	private int taxSeasonId;
 	
 	public int getId() {
 		return id;
@@ -105,10 +111,10 @@ public class Transaction { // each row in the rawdata table
 		this.notes = notes;
 	}
 	public int getTaxSeason() {
-		return taxSeason;
+		return taxSeasonId;
 	}
 	public void setTaxSeason(int taxSeason) {
-		this.taxSeason = taxSeason;
+		this.taxSeasonId = taxSeason;
 	}
 	
 }

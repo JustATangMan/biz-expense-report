@@ -5,24 +5,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 //Id
 //Name
 //Description
 
 @Entity
+@Table(name="businesses")
 public class Business {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="business_id")
 	private int id;
+	
 	@Column(name="business_name")
 	private String name;
+	
 	@Column(name="business_description")
 	private String description;
-	@Column(name="tax_season")
-	private int taxSeason;
+	
+	@Column(name="tax_season_id")
+	private int taxSeasonId;
 
 	public int getId() {
 		return id;
@@ -43,9 +48,9 @@ public class Business {
 		this.description = description;
 	}
 	public int getTaxSeason() {
-		return taxSeason;
+		return taxSeasonId;
 	}
 	public void setTaxSeason(int taxSeason) {
-		this.taxSeason = taxSeason;
+		this.taxSeasonId = taxSeason;
 	}
 }
