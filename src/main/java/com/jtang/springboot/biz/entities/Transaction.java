@@ -28,9 +28,17 @@ public class Transaction { // each row in the rawdata table
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="source")
 	private String source;
+	
+	@Column(name="date")
 	private Date date;
+
+	@Column(name="description")
 	private String description;
+
+	@Column(name="amount")
 	private Double amount;
 	
 	@Column(name="adjusted_amount")
@@ -45,6 +53,7 @@ public class Transaction { // each row in the rawdata table
 	@Column(name="account_id")
 	private int accountId;
 	
+	@Column(name="notes")
 	private String notes;
 	
 	@Column(name="tax_season_id")
