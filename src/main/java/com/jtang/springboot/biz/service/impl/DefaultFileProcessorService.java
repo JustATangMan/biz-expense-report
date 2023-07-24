@@ -5,10 +5,11 @@ import java.io.FileInputStream;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.apache.poi.ss.usermodel.Cell;
+import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jtang.springboot.biz.entities.Transaction;
@@ -16,6 +17,9 @@ import com.jtang.springboot.biz.service.FileProcessorService;
 
 @Service
 public class DefaultFileProcessorService implements FileProcessorService {
+
+	@Autowired
+	private ReferenceDataProvider rdp;
 
 	@Override
 	public List<Transaction> readTransactions(File file) {
@@ -35,39 +39,9 @@ public class DefaultFileProcessorService implements FileProcessorService {
 				trans.setDescription(row.getCell(2).getStringCellValue());
 				trans.setAmount(row.getCell(3).getNumericCellValue());
 				trans.setAdjustedAmount(row.getCell(4).getNumericCellValue());
-				trans.setCategoryId((int)row.getCell(6).getNumericCellValue()); // need to make refdataprovider for these
-				trans.setBusinessId((int)row.getCell(7).getNumericCellValue());
-				trans.setAccountId((int)row.getCell(8).getNumericCellValue());
-//				for (Cell cell : row) {
-//					// use cell column index
-//					switch (cell.getColumnIndex()) {
-//					case 0: 
-//						trans.setSource(cell.getStringCellValue());
-//						break;
-//					case 1:
-//						trans.setDate(cell.getDateCellValue());
-//						break;
-//					case 2:
-//						trans.setDescription(cell.getStringCellValue());
-//						break;
-//					case 3:
-//						trans.setAmount(cell.getNumericCellValue());
-//						break;
-//					case 4:
-//						trans.setAdjustedAmount(cell.getNumericCellValue());
-//						break;
-//					case 6:
-//						trans.setCategoryId(col); //util to get id of cat/business/account from name
-//						break; // reference provider into config; 
-//					case 7:
-//						trans.setBusinessId(col);
-//						break;
-//					case 8:
-//						trans.setAccountId(col);
-//						break;
-//					}
-//					col++;
-//				}
+				trans.setCategoryId(rdp.getCategoryFromName(row.getCell(5).getStringCellValue()).getId()); // need to make refdataprovider for these
+				trans.setBusinessId(rdp.getBusinessFromName(row.getCell(6).getStringCellValue()).getId());
+				trans.setAccountId(rdp.getAccountFromName(row.getCell(7).getStringCellValue()).getId());
 				transactions.add(trans);
 			}
 			workbook.close();
