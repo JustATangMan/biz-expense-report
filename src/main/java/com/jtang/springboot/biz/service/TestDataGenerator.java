@@ -3,10 +3,12 @@ package com.jtang.springboot.biz.service;
 import com.jtang.springboot.biz.entities.Account;
 import com.jtang.springboot.biz.entities.Business;
 import com.jtang.springboot.biz.entities.Category;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TestDataGenerator {
 
     public List<Account> createMockAccounts() {
@@ -14,7 +16,7 @@ public class TestDataGenerator {
         Account acc = new Account();
         acc.setId(1);
         acc.setDescription("blah blah");
-        acc.setName("Account1");
+        acc.setName("Utilities");
         acc.setTaxSeason(1);
         Account acc2 = new Account();
         acc2.setId(2);
@@ -31,12 +33,12 @@ public class TestDataGenerator {
         Business biz = new Business();
         biz.setId(1);
         biz.setDescription("money");
-        biz.setName("Biz1");
+        biz.setName("Financial Service");
         biz.setTaxSeason(1);
         Business biz2 = new Business();
         biz2.setId(2);
         biz2.setDescription("more money");
-        biz2.setName("Biz2");
+        biz2.setName("153 Orange");
         biz2.setTaxSeason(1);
         businesses.add(biz);
         businesses.add(biz2);
@@ -48,7 +50,7 @@ public class TestDataGenerator {
         Category cat = new Category();
         cat.setId(1);
         cat.setDescription("cat1");
-        cat.setName("Category1");
+        cat.setName("Utilities");
         cat.setTaxSeason(1);
         Category cat2 = new Category();
         cat2.setId(2);

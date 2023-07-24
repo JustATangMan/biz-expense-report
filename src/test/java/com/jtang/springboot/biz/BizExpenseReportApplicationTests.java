@@ -9,6 +9,7 @@ import com.jtang.springboot.biz.entities.Transaction;
 import com.jtang.springboot.biz.repo.*;
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import com.jtang.springboot.biz.service.TestDataGenerator;
+import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +46,18 @@ class BizExpenseReportApplicationTests {
 
 	@Autowired
 	private TestDataGenerator tdg;
+	List<Account> accounts;
+	List<Business> businesses;
+	List<Category> categories;
 	File file = new File("src/test/resources/sheet.xlsx");
-	List<Account> accounts = tdg.createMockAccounts();
-	List<Business> businesses = tdg.createMockBusinesses();
-	List<Category> categories = tdg.createMockCategories();
+
+	@PostConstruct
+	public void init() {
+		accounts = tdg.createMockAccounts();
+		businesses = tdg.createMockBusinesses();
+		categories = tdg.createMockCategories();
+	}
+
 	@Test
 	void testExcel() {
 		when(accRepo.findAll()).thenReturn(accounts);
@@ -66,7 +75,7 @@ class BizExpenseReportApplicationTests {
 	void testRDPAccount() {
 		when(accRepo.findAll()).thenReturn(accounts);
 		rdp.init();
-		assertEquals(rdp.getAccountFromId(1).getName(), "Account1");
+		assertEquals(rdp.getAccountFromId(1).getName(), "Utilities");
 		assertEquals(rdp.getAccountFromName("Account2").getDescription(), "he he he haw");
 	}
 
@@ -74,8 +83,8 @@ class BizExpenseReportApplicationTests {
 	void testRDPBusiness() {
 		when(bizRepo.findAll()).thenReturn(businesses);
 		rdp.init();
-		assertEquals(rdp.getBusinessFromId(1).getName(), "Biz1");
-		assertEquals(rdp.getBusinessFromName("Biz2").getDescription(), "more money");
+		assertEquals(rdp.getBusinessFromId(1).getName(), "Financial Service");
+		assertEquals(rdp.getBusinessFromName("153 Orange").getDescription(), "more money");
 		assertEquals(rdp.getBusinessFromId(4), null);
 	}
 
@@ -83,7 +92,7 @@ class BizExpenseReportApplicationTests {
 	void testRDPCategory() {
 		when(catRepo.findAll()).thenReturn(categories);
 		rdp.init();
-		assertEquals(rdp.getCategoryFromId(1).getName(), "Category1");
+		assertEquals(rdp.getCategoryFromId(1).getName(), "Utilities");
 		assertEquals(rdp.getCategoryFromName("Category2").getDescription(), "cat2");
 	}
 }
