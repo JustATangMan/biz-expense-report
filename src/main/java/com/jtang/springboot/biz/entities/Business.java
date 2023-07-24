@@ -53,4 +53,9 @@ public class Business {
 	public void setTaxSeason(int taxSeason) {
 		this.taxSeasonId = taxSeason;
 	}
+
+	@Override
+	public String toString() {
+		return "Business | Id: " + id + ", Name: " + name + ", Description: " + description + ", Tax Season: " + taxSeasonId;
+	}
 }

@@ -62,6 +62,7 @@ public class ReferenceDataProvider {
 			catToAcc.put(getCategoryFromId(cta.getCategory_id()), getAccountFromId(cta.getAccount_id()));
 		}
 		LOGGER.info("********************ReferenceDataProvider init done **********************************");
+		LOGGER.info("Account size: {}", accounts.size());
 	}
 
 	public List<Account> getAccounts() {

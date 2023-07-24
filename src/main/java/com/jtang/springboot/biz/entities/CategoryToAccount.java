@@ -48,4 +48,9 @@ public class CategoryToAccount {
 	public void setTaxSeason(int taxSeasonId) {
 		this.taxSeasonId = taxSeasonId;
 	}
+
+	@Override
+	public String toString() {
+		return "CatToAcc | Id: " + id + ", CategoryId: " + categoryId + ", AccountId: " + accountId + ", Tax Season: " + taxSeasonId;
+	}
 }
