@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jtang.springboot.biz.entities.Summary;
@@ -18,20 +18,26 @@ import com.jtang.springboot.biz.service.FileProcessorService;
 public class BizExpenseReportController {
 	
 	@Autowired
-	private FileProcessorService fileService;
+	private FileProcessorService fileProcessorService;
 	
 	//home page
 	
 	//upload
+
+	@PostMapping("/upload/")
 	public String uploadRawData(MultipartFile file) { //GET & POST
-		//upload file -> fileservice -> reportservice save
+		// upload file -> fileservice -> reportservice save
+		// read stream, return file
+		// pass file into fileprocessor, get back list of transactions
+		// pass list into bizexpenseservice, save into database
+		// return ok
 		byte[] bytes;
 		try {
 			bytes = file.getBytes();
 			File data = new File("src/main/resources/targetFile.tmp");
 			try (OutputStream os = new FileOutputStream(data)) {
 				os.write(bytes);
-				fileService.readTransactions(data);
+				fileProcessorService.readTransactions(data);
 				return "ok";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -46,8 +52,12 @@ public class BizExpenseReportController {
 			
 	}
 	//edit raw
-	public List<Transaction> editRawData(int taxSeasonId) { //GET
+	@GetMapping("/get-raw-data/{taxSeasonId}")
+	public List<Transaction> getRawData(@PathVariable("taxSeasonId") int taxSeasonId) { //GET
 		//edit data -> repo update/put into database
+		// pass taxSeasonId into bizexpensereportservice
+		// call getAllTransactions, give list
+		// return list
 		return null;
 	}
 	

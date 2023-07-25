@@ -44,19 +44,10 @@ class BizExpenseReportApplicationTests {
 	@Autowired
 	private FileProcessorService service;
 
-	@Autowired
-	private TestDataGenerator tdg;
-	List<Account> accounts;
-	List<Business> businesses;
-	List<Category> categories;
+	List<Account> accounts = TestDataGenerator.createMockAccounts();
+	List<Business> businesses = TestDataGenerator.createMockBusinesses();
+	List<Category> categories = TestDataGenerator.createMockCategories();
 	File file = new File("src/test/resources/sheet.xlsx");
-
-	@PostConstruct
-	public void init() {
-		accounts = tdg.createMockAccounts();
-		businesses = tdg.createMockBusinesses();
-		categories = tdg.createMockCategories();
-	}
 
 	@Test
 	void testExcel() {
@@ -95,4 +86,6 @@ class BizExpenseReportApplicationTests {
 		assertEquals(rdp.getCategoryFromId(1).getName(), "Utilities");
 		assertEquals(rdp.getCategoryFromName("Category2").getDescription(), "cat2");
 	}
+
+	//save one record
 }
