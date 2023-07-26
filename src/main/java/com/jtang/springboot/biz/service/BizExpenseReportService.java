@@ -7,12 +7,12 @@ import com.jtang.springboot.biz.entities.Transaction;
 
 public interface BizExpenseReportService {
 	
-	public List<Transaction> getAllTransactions(int taxSeasonId); //repo.find, filter by tax season?
+	List<Transaction> getAllTransactions(int taxSeasonId); //repo.find, filter by tax season?
 	
-	public List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save
+	List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save
 	
-	public ExpenseSummary getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
+	ExpenseSummary getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
 	
-	public void deleteRawData(int taxSeason);
+	void deleteRawData(int taxSeason);
 	
 }
