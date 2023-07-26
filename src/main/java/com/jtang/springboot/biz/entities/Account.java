@@ -53,4 +53,9 @@ public class Account {
 	public void setTaxSeason(int taxSeason) {
 		this.taxSeasonId = taxSeason;
 	}
+
+	@Override
+	public String toString() {
+		return "Account | Id: " + id + ", Name: " + name + ", Description: " + description + ", Tax Season: " + taxSeasonId;
+	}
 }

@@ -27,6 +27,7 @@ public class Transaction { // each row in the rawdata table
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="transaction_id")
 	private int id;
 	
 	@Column(name="source")

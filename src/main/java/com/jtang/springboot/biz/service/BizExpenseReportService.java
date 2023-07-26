@@ -9,7 +9,7 @@ public interface BizExpenseReportService {
 	
 	public List<Transaction> getAllTransactions(int taxSeasonId); //repo.find, filter by tax season?
 	
-	public void saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save  
+	public List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save
 	
 	public ExpenseSummary getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
 	

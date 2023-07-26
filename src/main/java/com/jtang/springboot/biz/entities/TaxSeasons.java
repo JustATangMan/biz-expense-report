@@ -56,4 +56,9 @@ public class TaxSeasons { //create another table to store the "identifier" (tax 
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "TaxSeason | Id: " + taxSeasonId + ", Name: " + name + ", Year: " + year + ", Description: " + description;
+	}
 }
