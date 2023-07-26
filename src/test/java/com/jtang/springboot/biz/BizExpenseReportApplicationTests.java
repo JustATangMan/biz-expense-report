@@ -20,6 +20,7 @@ import com.jtang.springboot.biz.service.FileProcessorService;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -76,7 +77,7 @@ class BizExpenseReportApplicationTests {
 		rdp.init();
 		assertEquals(rdp.getBusinessFromId(1).getName(), "Financial Service");
 		assertEquals(rdp.getBusinessFromName("153 Orange").getDescription(), "more money");
-		assertEquals(rdp.getBusinessFromId(4), null);
+		assertNull(rdp.getBusinessFromId(4));
 	}
 
 	@Test

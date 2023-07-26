@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BizExpenseTransactionRepository extends JpaRepository<Transaction, Integer> {
-    public List<Transaction> findByTaxSeasonId(int id);
+    List<Transaction> findByTaxSeasonId(int id);
 }

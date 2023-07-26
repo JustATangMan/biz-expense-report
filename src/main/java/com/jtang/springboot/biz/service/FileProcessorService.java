@@ -7,6 +7,6 @@ import com.jtang.springboot.biz.entities.Transaction;
 
 public interface FileProcessorService {
 	
-	public List<Transaction> readTransactions(File file);
+	List<Transaction> readTransactions(File file);
 	
 }
