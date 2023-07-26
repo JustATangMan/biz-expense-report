@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.jtang.springboot.biz.entities.Transaction;
 
+import java.util.List;
+
 @Repository
 public interface BizExpenseTransactionRepository extends JpaRepository<Transaction, Integer> {
-
+    public List<Transaction> findByTaxSeasonId(int id);
 }
