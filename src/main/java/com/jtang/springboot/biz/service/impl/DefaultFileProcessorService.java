@@ -1,7 +1,6 @@
 package com.jtang.springboot.biz.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,15 +21,24 @@ public class DefaultFileProcessorService implements FileProcessorService {
 	private ReferenceDataProvider rdp;
 
 	@Override
-	public List<Transaction> readTransactions(File file) {
+	public List<Transaction> readTransactions(InputStream stream) {
+		return excelWorkbookProcessing(stream);
+	}
 
-		List<Transaction> transactions = new ArrayList<>();
-		FileInputStream stream;
+	@Override
+	public List<Transaction> readTransactions(File file) {
 		try {
-			stream = new FileInputStream(file); // check for xlsx
+			return excelWorkbookProcessing(new FileInputStream(file)); // check for xlsx
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Transaction> excelWorkbookProcessing(InputStream stream) {
+		try {
+			List<Transaction> transactions = new ArrayList<>();
 			XSSFWorkbook workbook = new XSSFWorkbook(stream);
 			XSSFSheet sheet = workbook.getSheetAt(0);
-			
 			for (Row row : sheet) { //loop through sheet, populate a transaction with each row
 				Transaction trans = new Transaction();
 //				int col = 0;
@@ -45,10 +53,10 @@ public class DefaultFileProcessorService implements FileProcessorService {
 				transactions.add(trans);
 			}
 			workbook.close();
+			return transactions;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return transactions;
 	}
-
 }
