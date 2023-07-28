@@ -1,9 +1,6 @@
 package com.jtang.springboot.biz.controllers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
@@ -28,33 +25,19 @@ public class BizExpenseReportController {
 
     //upload
 
+    /**
+     * Takes a raw data Excel file and saves it to the database for a given tax season
+     *
+     * @param file File containing raw data
+     * @param taxSeasonId Tax Season ID the data is saved under
+     * @return String indicating upload status
+     * @throws IOException Error when processing file
+     */
     @RequestMapping(value="/upload/{id}", method = RequestMethod.POST)
-    public String uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) { //GET & POST
-        // upload file -> fileservice -> reportservice save
-        // read stream, return file
-        // pass file into fileprocessor, get back list of transactions
-        // pass list into bizexpenseservice, save into database
-        // return ok
-        byte[] bytes;
-        try {
-            bytes = file.getBytes();
-            File data = new File("src/main/resources/targetFile.tmp");
-            try (OutputStream os = new FileOutputStream(data)) {
-                os.write(bytes);
-                List<Transaction> transactions = fileProcessorService.readTransactions(data);
-                defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
-                return "ok";
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return "bad";
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return "bad";
-        }
-
+    public String uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) throws IOException { //GET & POST
+        List<Transaction> transactions = fileProcessorService.readTransactions(file.getInputStream());
+        defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
+        return "ok";
     }
 
     //edit raw

@@ -1,6 +1,8 @@
 package com.jtang.springboot.biz;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import com.jtang.springboot.biz.entities.Account;
 import com.jtang.springboot.biz.entities.Business;
@@ -51,7 +53,7 @@ class BizExpenseReportApplicationTests {
 	File file = new File("src/test/resources/sheet.xlsx");
 
 	@Test
-	void testExcel() {
+	void testExcelWithFile() {
 		when(accRepo.findAll()).thenReturn(accounts);
 		when(bizRepo.findAll()).thenReturn(businesses);
 		when(catRepo.findAll()).thenReturn(categories);
@@ -62,6 +64,20 @@ class BizExpenseReportApplicationTests {
 		LOGGER.info("Transaction size: {}", transactions.size());
 		assertEquals(transactions.size(), 2);
 	}
+
+	@Test
+	void testExcelWithStream() throws FileNotFoundException {
+		when(accRepo.findAll()).thenReturn(accounts);
+		when(bizRepo.findAll()).thenReturn(businesses);
+		when(catRepo.findAll()).thenReturn(categories);
+		rdp.init();
+
+		List<Transaction> transactions = service.readTransactions(new FileInputStream(file));
+		System.out.println();
+		LOGGER.info("Transaction size: {}", transactions.size());
+		assertEquals(transactions.size(), 2);
+	}
+
 
 	@Test
 	void testRDPAccount() {
