@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="tax_seasons")
-public class TaxSeasons { //create another table to store the "identifier" (tax season)
+public class TaxSeason { //create another table to store the "identifier" (tax season)
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

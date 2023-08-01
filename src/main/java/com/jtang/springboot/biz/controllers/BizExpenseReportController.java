@@ -3,16 +3,17 @@ package com.jtang.springboot.biz.controllers;
 import java.io.*;
 import java.util.List;
 
+import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jtang.springboot.biz.entities.Summary;
-import com.jtang.springboot.biz.entities.Transaction;
 import com.jtang.springboot.biz.service.FileProcessorService;
 
 @RestController
+@Transactional
 public class BizExpenseReportController {
 
     @Autowired
@@ -33,14 +34,20 @@ public class BizExpenseReportController {
      * @return String indicating upload status
      * @throws IOException Error when processing file
      */
-    @RequestMapping(value="/upload/{id}", method = RequestMethod.POST)
-    public String uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) throws IOException { //GET & POST
+    @PostMapping(value="/upload/{id}")
+    public List<Transaction> uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) throws IOException { //GET & POST
+        defaultBizExpenseReportService.deleteRawData(taxSeasonId);
         List<Transaction> transactions = fileProcessorService.readTransactions(file.getInputStream());
-        defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
-        return "ok";
+        return defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
     }
 
     //edit raw
+
+    /**
+     *
+     * @param taxSeasonId Tax Season ID
+     * @return All transactions under tax season (provided by parameter)
+     */
     @GetMapping("/get-raw-data/{taxSeasonId}")
     public List<Transaction> getRawData(@PathVariable("taxSeasonId") int taxSeasonId) { //GET
         //edit data -> repo update/put into database
@@ -50,15 +57,17 @@ public class BizExpenseReportController {
         return defaultBizExpenseReportService.getAllTransactions(taxSeasonId);
     }
 
-    public String updateTransaction(Transaction transaction) { //POST
+    @PostMapping(value="/update")
+    public Transaction updateTransaction(@RequestBody Transaction transaction) { //POST
+        //check if id is valid (exists to be updated)
+        return defaultBizExpenseReportService.updateTransaction(transaction);
         //update database for given transaction
-        return null;
     }
 
     //display summary
-    public List<Summary> displaySummary(int taxSeasonId) { //GET
+    public ExpenseSummary displaySummary(int taxSeasonId) { //GET
         //select taxseason -> repo.get + calculate summary -> display
-        return null;
+        return defaultBizExpenseReportService.getSummaryTable(taxSeasonId);
     }
 
     //delete
