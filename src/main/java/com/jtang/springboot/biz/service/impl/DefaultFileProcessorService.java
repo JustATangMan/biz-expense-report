@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -18,7 +17,7 @@ import com.jtang.springboot.biz.service.FileProcessorService;
 public class DefaultFileProcessorService implements FileProcessorService {
 
 	@Autowired
-	private ReferenceDataProvider rdp;
+	private DefaultReferenceDataProvider rdp;
 
 	@Override
 	public List<Transaction> readTransactions(InputStream stream) {
@@ -47,9 +46,10 @@ public class DefaultFileProcessorService implements FileProcessorService {
 				trans.setDescription(row.getCell(2).getStringCellValue());
 				trans.setAmount(row.getCell(3).getNumericCellValue());
 				trans.setAdjustedAmount(row.getCell(4).getNumericCellValue());
-				trans.setCategoryId(rdp.getCategoryFromName(row.getCell(5).getStringCellValue()).getId()); // need to make refdataprovider for these
-				trans.setBusinessId(rdp.getBusinessFromName(row.getCell(6).getStringCellValue()).getId());
-				trans.setAccountId(rdp.getAccountFromName(row.getCell(7).getStringCellValue()).getId());
+				trans.setAppliedAmount(row.getCell(5).getNumericCellValue());
+				trans.setCategoryId(rdp.getCategoryFromName(row.getCell(6).getStringCellValue()).getId()); // need to make refdataprovider for these
+				trans.setBusinessId(rdp.getBusinessFromName(row.getCell(7).getStringCellValue()).getId());
+				trans.setAccountId(rdp.getAccountFromName(row.getCell(8).getStringCellValue()).getId());
 				transactions.add(trans);
 			}
 			workbook.close();

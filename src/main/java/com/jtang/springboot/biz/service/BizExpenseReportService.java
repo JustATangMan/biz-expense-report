@@ -12,7 +12,9 @@ public interface BizExpenseReportService {
 	List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save
 	
 	ExpenseSummary getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
-	
+
+	Transaction updateTransaction(Transaction transaction);
+
 	void deleteRawData(int taxSeason);
 	
 }

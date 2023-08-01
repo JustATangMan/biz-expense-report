@@ -63,6 +63,7 @@ create table if not exists transactions (
     description varchar(500),
     amount decimal(10,2),
     adjusted_amount decimal(10,2),
+    applied_amount decimal(10,2),
     category_id int,
     business_id int,
     account_id int,
@@ -74,3 +75,16 @@ create table if not exists transactions (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id),
     FOREIGN KEY (business_id) REFERENCES businesses(business_id)
 );
+
+alter table transactions auto_increment = 1;
+delete from transactions where transaction_id >= 1;
+select * from transactions;
+select * from accounts;
+select * from categories;
+select * from businesses;
+select * from tax_seasons;
+insert into accounts values (1,"Utilities","utilities account",1);
+insert into categories values (1,"Utilities","utilities category",1);
+insert into businesses values (1, "Financial Service", "business", 1);
+insert into businesses values (2, "153 Orange", "business", 1);
+insert into tax_seasons values (1, "tax", 2023, "first tax season");

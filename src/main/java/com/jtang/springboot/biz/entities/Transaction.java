@@ -44,7 +44,10 @@ public class Transaction { // each row in the rawdata table
 	
 	@Column(name="adjusted_amount")
 	private Double adjustedAmount;
-	
+
+	@Column(name="applied_amount")
+	private Double appliedAmount;
+
 	@Column(name="category_id")
 	private int categoryId;
 	
@@ -95,6 +98,12 @@ public class Transaction { // each row in the rawdata table
 	}
 	public void setAdjustedAmount(Double adjustedAmount) {
 		this.adjustedAmount = adjustedAmount;
+	}
+	public Double getAppliedAmount() {
+		return appliedAmount;
+	}
+	public void setAppliedAmount(Double appliedAmount) {
+		this.appliedAmount = appliedAmount;
 	}
 	public int getCategoryId() {
 		return categoryId;

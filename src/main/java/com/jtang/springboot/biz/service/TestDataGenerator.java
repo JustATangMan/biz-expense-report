@@ -1,10 +1,6 @@
 package com.jtang.springboot.biz.service;
 
-import com.jtang.springboot.biz.entities.Account;
-import com.jtang.springboot.biz.entities.Business;
-import com.jtang.springboot.biz.entities.Category;
-import com.jtang.springboot.biz.entities.Transaction;
-import org.springframework.stereotype.Service;
+import com.jtang.springboot.biz.entities.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,6 +61,17 @@ public class TestDataGenerator {
         return categories;
     }
 
+    public static List<TaxSeason> createMockTaxSeasons() {
+        List<TaxSeason> taxSeasons = new ArrayList<>();
+        TaxSeason tax = new TaxSeason();
+        tax.setTaxSeasonId(1);
+        tax.setDescription("first tax season");
+        tax.setYear(2023);
+        tax.setName("tax");
+        taxSeasons.add(tax);
+        return taxSeasons;
+    }
+
     public static List<Transaction> createMockTransactions(boolean makeId) throws ParseException {
         List<Transaction> transactions = new ArrayList<>();
         Transaction trans = new Transaction();
@@ -75,6 +82,7 @@ public class TestDataGenerator {
         trans.setDescription("trans1");
         trans.setAmount(226.93);
         trans.setAdjustedAmount(113.0);
+        trans.setAppliedAmount(113.0);
         trans.setAccountId(1);
         trans.setBusinessId(1);
         trans.setCategoryId(1);
@@ -83,19 +91,23 @@ public class TestDataGenerator {
         trans.setNotes("trans in season 1");
 
         Transaction trans2 = new Transaction();
-        trans2.setTaxSeason(2);
+        trans2.setTaxSeason(1);
         if (makeId) {
             trans2.setId(2);
         }
         trans2.setDescription("trans2");
         trans2.setAmount(26.03);
         trans2.setAdjustedAmount(0.0);
+        trans2.setAppliedAmount(26.03);
         trans2.setAccountId(1);
         trans2.setBusinessId(2);
         trans2.setCategoryId(1);
         trans2.setDate(new Date(new SimpleDateFormat("MMM dd yyyy zzz").parse("Jan 14 2022 EST").getTime()));
         trans2.setSource("BoA-7797");
         trans2.setNotes("trans in season 2");
+
+        transactions.add(trans);
+        transactions.add(trans2);
 
         return transactions;
     }
