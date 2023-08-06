@@ -1,8 +1,6 @@
 package com.jtang.springboot.biz.service.impl;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.slf4j.Logger;
@@ -23,230 +21,163 @@ import com.jtang.springboot.biz.repo.BizExpenseCategoryRepository;
 import com.jtang.springboot.biz.repo.BizExpenseTaxSeasonRepository;
 import com.jtang.springboot.biz.repo.BizExpenseTransactionRepository;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
 public class DefaultReferenceDataProvider implements ReferenceDataProvider {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultReferenceDataProvider.class);
-	private List<Account> accounts;
-	private List<Business> businesses;
-	private List<Category> categories;
-	private Map<Category, Account> catToAcc;
-	private List<TaxSeason> taxSeasons;
-	private List<Transaction> transactions;
 
-	@Autowired
+//	@Autowired
 	private BizExpenseAccountRepository accRepo;
-	@Autowired
+//	@Autowired
 	private BizExpenseBusinessRepository bizRepo;
-	@Autowired
+//	@Autowired
 	private BizExpenseCategoryRepository catRepo;
-	@Autowired
+//	@Autowired
 	private BizExpenseCatToAccRepository catToAccRepo;
-	@Autowired
+//	@Autowired
 	private BizExpenseTaxSeasonRepository taxRepo;
-	@Autowired
+//	@Autowired
 	private BizExpenseTransactionRepository transRepo;
 
-	public BizExpenseAccountRepository getAccRepo() {
-		return accRepo;
-	}
-	public BizExpenseBusinessRepository getBizRepo() {
-		return bizRepo;
-	}
-	public BizExpenseCategoryRepository getCatRepo() {
-		return catRepo;
-	}
-	public BizExpenseCatToAccRepository getCatToAccRepo() {
-		return catToAccRepo;
-	}
-	public BizExpenseTaxSeasonRepository getTaxRepo() {
-		return taxRepo;
-	}
-	public BizExpenseTransactionRepository getTransRepo() {
-		return transRepo;
-	}
-
-	@PostConstruct
-	@Override
-	public void init() { // only grab tax season
-		//TODO: refresh cached lists
-		accounts = accRepo.findAll();
-		businesses = bizRepo.findAll();
-		categories = catRepo.findAll();
-		taxSeasons = taxRepo.findAll();
-		transactions = transRepo.findAll();
-		catToAcc = new HashMap<>();
-		List<CategoryToAccount> CTA = catToAccRepo.findAll();
-		for (CategoryToAccount cta : CTA) {
-			catToAcc.put(getCategoryFromId(cta.getCategory_id()), getAccountFromId(cta.getAccount_id()));
-		}
-		LOGGER.info("********************ReferenceDataProvider init done **********************************");
-		LOGGER.info("Account size: {}", accounts.size());
+	@Autowired
+	public DefaultReferenceDataProvider(BizExpenseAccountRepository accRepo, BizExpenseBusinessRepository bizRepo, BizExpenseCategoryRepository catRepo, BizExpenseCatToAccRepository catToAccRepo, BizExpenseTaxSeasonRepository taxRepo, BizExpenseTransactionRepository transRepo) {
+		this.accRepo = accRepo;
+		this.bizRepo = bizRepo;
+		this.catRepo = catRepo;
+		this.catToAccRepo = catToAccRepo;
+		this.taxRepo = taxRepo;
+		this.transRepo = transRepo;
 	}
 
 	@Override
 	public List<Account> getAccounts(int taxSeasonId) {
-		return accounts.stream().filter(a -> a.getTaxSeason() == taxSeasonId).toList(); // 330 fold
+		return accRepo.findByTaxSeasonId(taxSeasonId);
 	}
 
 	@Override
 	public List<Account> getAccounts() {
-		return accounts;
+		return accRepo.findAll();
 	}
 
 	@Override
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+	public Account getAccountFromName(String name, int taxSeasonId) {
+		var accountList = getAccounts(taxSeasonId).stream()
+				.filter(a -> a.getName().equalsIgnoreCase(name)).toList();
+		return accountList.size() > 0 ? accountList.get(0) : null;
 	}
 
 	@Override
-	public Account getAccountFromName(String name) {
-		for (Account account : accounts) {
-			if (account.getName().equalsIgnoreCase(name)) {
-				return account;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Account getAccountFromId(int id) {
-		for (Account account : accounts) {
-			if (account.getId() == id) {
-				return account;
-			}
-		}
-		return null;
+	public Account getAccountFromId(int id, int taxSeasonId) {
+		var accountList = getAccounts(taxSeasonId).stream()
+				.filter(a -> a.getId() == id).toList();
+		return accountList.size() > 0 ? accountList.get(0) : null;
 	}
 
 	@Override
 	public List<Business> getBusinesses(int taxSeasonId) {
-		return businesses.stream().filter(b -> b.getTaxSeason() == taxSeasonId).toList();
+		return bizRepo.findByTaxSeasonId(taxSeasonId);
 	}
 
 	@Override
 	public List<Business> getBusinesses() {
-		return businesses;
+		return bizRepo.findAll();
 	}
 
 	@Override
-	public void setBusinesses(List<Business> businesses) {
-		this.businesses = businesses;
+	public Business getBusinessFromName(String name, int taxSeasonId) {
+		var businessList = getBusinesses(taxSeasonId).stream()
+				.filter(b -> b.getName().equalsIgnoreCase(name)).toList();
+		return businessList.size() > 0 ? businessList.get(0) : null;
 	}
 
 	@Override
-	public Business getBusinessFromName(String name) {
-		for (Business business : businesses) {
-			if (business.getName().equalsIgnoreCase(name)) {
-				return business;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Business getBusinessFromId(int id) {
-		var businessList = businesses.stream().filter(b -> b.getId() == id).toList();
+	public Business getBusinessFromId(int id, int taxSeasonId) {
+		var businessList = getBusinesses(taxSeasonId).stream()
+				.filter(b -> b.getId() == id).toList();
 		return businessList.size() > 0 ? businessList.get(0) : null;
 	}
 
 	@Override
 	public List<Category> getCategories(int taxSeasonId) {
-		return categories.stream().filter(c -> c.getTaxSeason() == taxSeasonId).toList();
+		return catRepo.findByTaxSeasonId(taxSeasonId);
 	}
 
 	@Override
-	public List<Category> getCategories() {
-		return categories;
+	public Category getCategoryFromName(String name, int taxSeasonId) {
+		var categoryList = getCategories(taxSeasonId).stream()
+				.filter(c -> c.getName().equalsIgnoreCase(name)).toList();
+		return categoryList.size() > 0 ? categoryList.get(0) : null;
 	}
 
 	@Override
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
+	public Category getCategoryFromId(int id, int taxSeasonId) {
+		var categoryList = getCategories(taxSeasonId).stream()
+				.filter(c -> c.getId() == id).toList();
+		return categoryList.size() > 0 ? categoryList.get(0) : null;
 	}
 
 	@Override
-	public Category getCategoryFromName(String name) {
-		System.out.println("input name: " + name);
-		for (Category category : categories) {
-			System.out.println("category name: " + category.getName());
-			if (category.getName().equalsIgnoreCase(name)) {
-				return category;
-			}
-		}
-		return null;
+	public List<CategoryToAccount> getCatToAcc() {
+		return catToAccRepo.findAll();
 	}
 
 	@Override
-	public Category getCategoryFromId(int id) {
-		for (Category category : categories) {
-			if (category.getId() == id) {
-				return category;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Map<Category, Account> getCatToAcc() {
-		return catToAcc;
-	}
-
-	@Override
-	public void setCatToAcc(Map<Category, Account> catToAcc) {
-		this.catToAcc = catToAcc;
-	}
-
-	@Override
-	public List<TaxSeason> getTaxSeasons(int taxSeasonId) {
-		return taxSeasons.stream().filter(t -> t.getTaxSeasonId() == taxSeasonId).toList();
+	public List<CategoryToAccount> getCatToAcc(int taxSeasonId) {
+		return catToAccRepo.findByTaxSeasonId(taxSeasonId);
 	}
 
 	@Override
 	public List<TaxSeason> getTaxSeasons() {
-		return taxSeasons;
+		return taxRepo.findAll();
 	}
 
 	@Override
-	public void setTaxSeasons(List<TaxSeason> taxSeasons) {
-		this.taxSeasons = taxSeasons;
+	public List<TaxSeason> getTaxSeasons(int taxSeasonId) {
+		return taxRepo.findByTaxSeasonId(taxSeasonId);
+	}
+
+	@Override
+	public Transaction findById(int id, int taxSeasonId) {
+		var transactionList = getTransactions(taxSeasonId).stream().filter(t -> t.getId() == id).toList();
+		return transactionList.size() > 0 ? transactionList.get(0) : null;
+	}
+
+	@Override
+	public List<Transaction> saveTransactions(List<Transaction> rawData) {
+		return transRepo.saveAll(rawData);
+	}
+
+	@Override
+	public void deleteTransactions(int taxSeasonId) {
+		transRepo.deleteByTaxSeasonId(taxSeasonId);
+	}
+
+	public void deleteTransactions() {
+		transRepo.deleteAll();
 	}
 
 	@Override
 	public TaxSeason getTaxSeasonFromName(String name) {
-		for (TaxSeason tax : taxSeasons) {
-			if (tax.getName().equalsIgnoreCase(name)) {
-				return tax;
-			}
-		}
-		return null;
+		var taxList = getTaxSeasons().stream()
+				.filter(t -> t.getName().equalsIgnoreCase(name)).toList();
+		return taxList.size() > 0 ? taxList.get(0) : null;
 	}
 
 	@Override
 	public TaxSeason getTaxSeasonsFromId(int id) {
-		for (TaxSeason tax : taxSeasons) {
-			if (tax.getTaxSeasonId() == id) {
-				return tax;
-			}
-		}
-		return null;
+		var taxList = getTaxSeasons().stream()
+				.filter(t -> t.getTaxSeasonId() == id).toList();
+		return taxList.size() > 0 ? taxList.get(0) : null;
 	}
 
 	@Override
 	public List<Transaction> getTransactions(int taxSeasonId) {
-		return transactions.stream().filter(t -> t.getTaxSeason() == taxSeasonId).toList();
+		return transRepo.findByTaxSeasonId(taxSeasonId);
 	}
 
 	@Override
 	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	@Override
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
+		return transRepo.findAll();
 	}
 
 }

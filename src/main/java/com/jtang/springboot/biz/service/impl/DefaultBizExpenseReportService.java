@@ -5,14 +5,21 @@ import com.jtang.springboot.biz.service.BizExpenseReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
 public class DefaultBizExpenseReportService implements BizExpenseReportService {
 
-    @Autowired
+//    @Autowired
     private DefaultReferenceDataProvider rdp;
+
+    public DefaultBizExpenseReportService(DefaultReferenceDataProvider rdp) {
+        this.rdp = rdp;
+    }
 
     @Override
     public List<Transaction> getAllTransactions(int taxSeasonId) {
@@ -24,43 +31,52 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
         for (Transaction trans : rawData) {
             trans.setTaxSeason(taxSeasonId);
         }
-        List<Transaction> transactions = rdp.getTransRepo().saveAll(rawData);
-        rdp.setTransactions(rdp.getTransRepo().findAll());
+        List<Transaction> transactions = rdp.saveTransactions(rawData);
         return transactions;
     } // test
 
     @Override
     public ExpenseSummary getSummaryTable(int taxSeasonId) {
+        // get given tax season; validate tax season
         List<TaxSeason> taxes = rdp.getTaxSeasons(taxSeasonId);
         if (taxSeasonId < 0 || taxes.isEmpty()) {
             throw new RuntimeException("Invalid tax id");
         } else {
-            ExpenseSummary summary = new ExpenseSummary(rdp.getAccounts(taxSeasonId),
-                    rdp.getBusinesses(taxSeasonId));
+            // pulling from repos and initializing expensesummary map of maps
+            List<Account> accounts = rdp.getAccounts(taxSeasonId);
+            List<Business> businesses = rdp.getBusinesses(taxSeasonId);
             List<Transaction> transactions = rdp.getTransactions(taxSeasonId);
+            ExpenseSummary summary = new ExpenseSummary(accounts, businesses);
+            // creating maps to lookup later (saves time instead of stream filtering each transaction)
+            Map<Integer, Account> accountMap = accounts.stream().
+                    collect(Collectors.toMap(account -> account.getId(), account -> account));
+            Map<Integer, Business> businessMap = businesses.stream().
+                    collect(Collectors.toMap(business -> business.getId(), business -> business));
+            Map<Account, Map<Business, Double>> summaryMap = summary.getSummary();
+            // add each transaction's applied amount to correct account/business
             for (Transaction trans : transactions) {
-                Account account = rdp.getAccountFromId(trans.getAccountId());
-                Business business = rdp.getBusinessFromId(trans.getBusinessId());
-                Double newAmount = summary.getSummary().get(account).get(business) + trans.getAppliedAmount();
-                summary.getSummary().get(account).put(business, newAmount);
+                Account account = accountMap.get(trans.getAccountId());
+                Business business = businessMap.get(trans.getBusinessId());
+                Double newAmount = summaryMap.get(account).get(business) + trans.getAppliedAmount();
+                summaryMap.get(account).put(business, newAmount);
             }
+            summary.setSummary(summaryMap);
             return summary;
         }
     }
 
     @Override
     public Transaction updateTransaction(Transaction transaction) {
-        if (rdp.getTransRepo().findById(transaction.getId()).isEmpty()) {
+        if (rdp.findById(transaction.getId(), transaction.getTaxSeason()) == null) {
             throw new RuntimeException("Invalid transaction id: " + transaction.getId());
         }
-        Transaction trans = rdp.getTransRepo().save(transaction);
-        rdp.setTransactions(rdp.getTransRepo().findAll());
-        return trans;
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(transaction);
+        return rdp.saveTransactions(transactions).get(0);
     }
 
     @Override
     public void deleteRawData(int taxSeason) {
-        rdp.getTransRepo().deleteByTaxSeasonId(taxSeason);
-        rdp.setTransactions(rdp.getTransRepo().findAll());
+        rdp.deleteTransactions(taxSeason);
     }
 }

@@ -135,5 +135,22 @@ public class Transaction { // each row in the rawdata table
 	public void setTaxSeason(int taxSeason) {
 		this.taxSeasonId = taxSeason;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Transaction{" +
+				"id=" + id +
+				", source='" + source + '\'' +
+				", date=" + date +
+				", description='" + description + '\'' +
+				", amount=" + amount +
+				", adjustedAmount=" + adjustedAmount +
+				", appliedAmount=" + appliedAmount +
+				", categoryId=" + categoryId +
+				", businessId=" + businessId +
+				", accountId=" + accountId +
+				", notes='" + notes + '\'' +
+				", taxSeasonId=" + taxSeasonId +
+				'}';
+	}
 }

@@ -30,7 +30,7 @@ public class JPATests {
 //    }
     @Test
     void testControllerUploadAndGet() throws IOException { // sql overrides given primary key id (auto increments)
-        rdp.getTransRepo().deleteAll();
+        rdp.deleteTransactions();
         File file = new File("src/test/resources/sheet.xlsx");
         assertEquals(bizExpenseReportController.uploadRawData(new MockMultipartFile("sheet.xlsx",
                 Files.readAllBytes(file.toPath())), 1).size(), 2);

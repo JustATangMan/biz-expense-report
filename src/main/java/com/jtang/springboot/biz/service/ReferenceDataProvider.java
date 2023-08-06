@@ -7,55 +7,47 @@ import java.util.Map;
 
 public interface ReferenceDataProvider {
 
-    public void init();
-
     public List<Account> getAccounts(int taxSeasonId);
 
     public List<Account> getAccounts();
 
-    public void setAccounts(List<Account> accounts);
+    public Account getAccountFromName(String name, int taxSeasonId);
 
-    public Account getAccountFromName(String name);
-
-    public Account getAccountFromId(int id);
+    public Account getAccountFromId(int id, int taxSeasonId);
 
     public List<Business> getBusinesses(int taxSeasonId);
 
     public List<Business> getBusinesses();
 
-    public void setBusinesses(List<Business> businesses);
+    public Business getBusinessFromName(String name, int taxSeasonId);
 
-    public Business getBusinessFromName(String name);
-
-    public Business getBusinessFromId(int id);
+    public Business getBusinessFromId(int id, int taxSeasonId);
 
     public List<Category> getCategories(int taxSeasonId);
 
-    public List<Category> getCategories();
+    public Category getCategoryFromName(String name, int taxSeasonId);
 
-    public void setCategories(List<Category> categories);
+    public Category getCategoryFromId(int id, int taxSeasonId);
 
-    public Category getCategoryFromName(String name);
+    public List<CategoryToAccount> getCatToAcc();
 
-    public Category getCategoryFromId(int id);
-
-    public Map<Category, Account> getCatToAcc();
-
-    public void setCatToAcc(Map<Category, Account> catToAcc);
-
-    public List<TaxSeason> getTaxSeasons(int id);
-
-    public List<TaxSeason> getTaxSeasons();
-
-    public void setTaxSeasons(List<TaxSeason> taxSeasons);
+    public List<CategoryToAccount> getCatToAcc(int taxSeasonId);
 
     public TaxSeason getTaxSeasonFromName(String name);
 
     public TaxSeason getTaxSeasonsFromId(int id);
+
     public List<Transaction> getTransactions(int taxSeasonId);
 
     public List<Transaction> getTransactions();
 
-    public void setTransactions(List<Transaction> transactions);
+    public List<TaxSeason> getTaxSeasons();
 
+    public List<TaxSeason> getTaxSeasons(int taxSeasonId);
+
+    public Transaction findById(int id, int taxSeasonId);
+
+    public List<Transaction> saveTransactions(List<Transaction> rawData);
+
+    public void deleteTransactions(int taxSeasonId);
 }

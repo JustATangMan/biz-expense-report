@@ -37,7 +37,7 @@ public class BizExpenseReportController {
     @PostMapping(value="/upload/{id}")
     public List<Transaction> uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) throws IOException { //GET & POST
         defaultBizExpenseReportService.deleteRawData(taxSeasonId);
-        List<Transaction> transactions = fileProcessorService.readTransactions(file.getInputStream());
+        List<Transaction> transactions = fileProcessorService.readTransactions(file.getInputStream(), taxSeasonId);
         return defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
     }
 
