@@ -48,12 +48,11 @@ public class FileProcessorTests {
     private BizExpenseTransactionRepository transRepo;
     @InjectMocks
     private DefaultReferenceDataProvider rdp = new DefaultReferenceDataProvider(accRepo,bizRepo,catRepo,catToAccRepo,taxRepo,transRepo);
-    @InjectMocks
-    private FileProcessorService fileProcessorService = new DefaultFileProcessorService(rdp);
-    @InjectMocks
-    private BizExpenseReportService bizExpenseReportService = new DefaultBizExpenseReportService(rdp);
+    private FileProcessorService fileProcessorService;
+    private BizExpenseReportService bizExpenseReportService;
 
     File file = new File("src/test/resources/sheet.xlsx");
+    File badFile = new File("src/test/resources/badsheet.xlsx");
     private TestDataGenerator tdg = new TestDataGenerator();
     List<Account> accounts = tdg.createMockAccounts();
     List<Business> businesses = tdg.createMockBusinesses();
@@ -62,9 +61,11 @@ public class FileProcessorTests {
 
     @BeforeEach
     void mockRepos() {
-//        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
-//        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
-//        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
+        fileProcessorService = new DefaultFileProcessorService(rdp);
+        bizExpenseReportService = new DefaultBizExpenseReportService(rdp);
+        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
+        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
+        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
 //        when(taxRepo.findByTaxSeasonId(1)).thenReturn(taxSeasons);
     }
 
@@ -86,11 +87,8 @@ public class FileProcessorTests {
 
     @Test
     void testBadData() {
-        try {
-            List<Transaction> transactions = tdg.createBadMockTransactions(false, 1);
-            System.out.println(transactions);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        List<Transaction> badTransactions = fileProcessorService.readTransactions(badFile, 1);
+//            List<Transaction> transactions = tdg.createBadMockTransactions(false, 1);
+        System.out.println(badTransactions);
     }
 }

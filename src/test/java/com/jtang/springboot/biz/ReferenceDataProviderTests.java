@@ -8,9 +8,16 @@ import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.repo.*;
 import com.jtang.springboot.biz.service.BizExpenseReportService;
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
+import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
+import com.jtang.springboot.biz.service.impl.DefaultFileProcessorService;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
 import com.jtang.springboot.biz.service.TestDataGenerator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +30,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ReferenceDataProviderTests {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultReferenceDataProvider.class);
-	@MockBean
+	@Mock
 	private BizExpenseAccountRepository accRepo;
-	@MockBean
+	@Mock
 	private BizExpenseBusinessRepository bizRepo;
-	@MockBean
+	@Mock
 	private BizExpenseCategoryRepository catRepo;
-	@MockBean
+	@Mock
 	private BizExpenseCatToAccRepository catToAccRepo;
-	@MockBean
+	@Mock
 	private BizExpenseTaxSeasonRepository taxRepo;
-	@MockBean
+	@Mock
 	private BizExpenseTransactionRepository transRepo;
-	@Autowired
-	private ReferenceDataProvider rdp;
-	@Autowired
-	private FileProcessorService fileProcessorService;
-	@Autowired
-	private BizExpenseReportService bizExpenseReportService;
+	@InjectMocks
+	private DefaultReferenceDataProvider rdp;
 
+	private FileProcessorService fileProcessorService;
+	private BizExpenseReportService bizExpenseReportService;
 	private TestDataGenerator tdg = new TestDataGenerator();
 
 	List<Account> accounts = tdg.createMockAccounts();
@@ -61,9 +66,14 @@ class ReferenceDataProviderTests {
 	}
 	List<TaxSeason> taxSeasons = tdg.createMockTaxSeasons();
 
+	@BeforeEach
+	void mockRepos() {
+		fileProcessorService = new DefaultFileProcessorService(rdp);
+		bizExpenseReportService = new DefaultBizExpenseReportService(rdp);
+	}
+
 	@Test
 	void testRDPAccount() {
-		when(accRepo.findAll()).thenReturn(accounts);
 		when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
 		assertEquals(rdp.getAccountFromId(16, 1).getName(), "Utilities");
 		assertEquals(rdp.getAccountFromName("Meal - C", 1).getDescription(), "account9");
@@ -71,7 +81,6 @@ class ReferenceDataProviderTests {
 
 	@Test
 	void testRDPBusiness() {
-		when(bizRepo.findAll()).thenReturn(businesses);
 		when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
 		assertEquals(rdp.getBusinessFromId(1, 1).getName(), "Financial Service");
 		assertEquals(rdp.getBusinessFromName("153 Orange", 1).getDescription(), "more money");
@@ -80,7 +89,6 @@ class ReferenceDataProviderTests {
 
 	@Test
 	void testRDPCategory() {
-		when(catRepo.findAll()).thenReturn(categories);
 		when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
 		assertEquals(rdp.getCategoryFromId(1, 1).getName(), "Advertising");
 		assertEquals(rdp.getCategoryFromName("Auto and travel - C & E", 1).getDescription(), "cat2");
