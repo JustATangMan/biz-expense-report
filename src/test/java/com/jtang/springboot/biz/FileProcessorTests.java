@@ -6,8 +6,16 @@ import com.jtang.springboot.biz.service.BizExpenseReportService;
 import com.jtang.springboot.biz.service.FileProcessorService;
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import com.jtang.springboot.biz.service.TestDataGenerator;
+import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
+import com.jtang.springboot.biz.service.impl.DefaultFileProcessorService;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +31,27 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class FileProcessorTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultReferenceDataProvider.class);
-    @MockBean
+    @Mock
     private BizExpenseAccountRepository accRepo;
-    @MockBean
+    @Mock
     private BizExpenseBusinessRepository bizRepo;
-    @MockBean
+    @Mock
     private BizExpenseCategoryRepository catRepo;
-    @MockBean
+    @Mock
     private BizExpenseCatToAccRepository catToAccRepo;
-    @MockBean
+    @Mock
     private BizExpenseTaxSeasonRepository taxRepo;
-    @MockBean
+    @Mock
     private BizExpenseTransactionRepository transRepo;
-    @Autowired
-    private ReferenceDataProvider rdp;
-    @Autowired
-    private FileProcessorService fileProcessorService;
-    @Autowired
-    private BizExpenseReportService bizExpenseReportService;
+    @InjectMocks
+    private DefaultReferenceDataProvider rdp = new DefaultReferenceDataProvider(accRepo,bizRepo,catRepo,catToAccRepo,taxRepo,transRepo);
+    @InjectMocks
+    private FileProcessorService fileProcessorService = new DefaultFileProcessorService(rdp);
+    @InjectMocks
+    private BizExpenseReportService bizExpenseReportService = new DefaultBizExpenseReportService(rdp);
 
     File file = new File("src/test/resources/sheet.xlsx");
     private TestDataGenerator tdg = new TestDataGenerator();
@@ -52,15 +60,16 @@ public class FileProcessorTests {
     List<Category> categories = tdg.createMockCategories();
     List<TaxSeason> taxSeasons = tdg.createMockTaxSeasons();
 
+    @BeforeEach
+    void mockRepos() {
+//        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
+//        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
+//        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
+//        when(taxRepo.findByTaxSeasonId(1)).thenReturn(taxSeasons);
+    }
+
     @Test
     void testExcelWithFile() {
-        when(accRepo.findAll()).thenReturn(accounts);
-        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
-        when(bizRepo.findAll()).thenReturn(businesses);
-        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
-        when(catRepo.findAll()).thenReturn(categories);
-        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
-
         List<Transaction> transactions = fileProcessorService.readTransactions(file, 1);
         System.out.println();
         LOGGER.info("Transaction size: {}", transactions.size());
@@ -69,13 +78,6 @@ public class FileProcessorTests {
 
     @Test
     void testExcelWithStream() throws FileNotFoundException {
-        when(accRepo.findAll()).thenReturn(accounts);
-        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
-        when(bizRepo.findAll()).thenReturn(businesses);
-        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
-        when(catRepo.findAll()).thenReturn(categories);
-        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
-
         List<Transaction> transactions = fileProcessorService.readTransactions(file, 1);
         System.out.println();
         LOGGER.info("Transaction size: {}", transactions.size());
@@ -84,12 +86,6 @@ public class FileProcessorTests {
 
     @Test
     void testBadData() {
-        when(accRepo.findAll()).thenReturn(accounts);
-        when(accRepo.findByTaxSeasonId(1)).thenReturn(accounts);
-        when(bizRepo.findAll()).thenReturn(businesses);
-        when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
-        when(catRepo.findAll()).thenReturn(categories);
-        when(catRepo.findByTaxSeasonId(1)).thenReturn(categories);
         try {
             List<Transaction> transactions = tdg.createBadMockTransactions(false, 1);
             System.out.println(transactions);

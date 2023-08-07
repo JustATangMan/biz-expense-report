@@ -17,8 +17,12 @@ import com.jtang.springboot.biz.service.FileProcessorService;
 @Service
 public class DefaultFileProcessorService implements FileProcessorService {
 
-	@Autowired
+//	@Autowired
 	private ReferenceDataProvider rdp;
+
+	public DefaultFileProcessorService(ReferenceDataProvider rdp) {
+		this.rdp = rdp;
+	}
 
 	@Override
 	public List<Transaction> readTransactions(InputStream stream, int taxSeasonId) {
