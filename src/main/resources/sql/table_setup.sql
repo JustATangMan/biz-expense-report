@@ -83,8 +83,62 @@ select * from accounts;
 select * from categories;
 select * from businesses;
 select * from tax_seasons;
-insert into accounts values (1,"Utilities","utilities account",1);
-insert into categories values (1,"Utilities","utilities category",1);
-insert into businesses values (1, "Financial Service", "business", 1);
-insert into businesses values (2, "153 Orange", "business", 1);
-insert into tax_seasons values (1, "tax", 2023, "first tax season");
+delete from accounts where account_id >= 1;
+delete from businesses where business_id >= 1;
+delete from categories where category_id >= 1;
+
+insert into accounts values 
+(1,"Advertising","account1",1),
+(2,"Auto and travel - C & E","account2",1),
+(3,"Cleaning & maintenance","account3",1),
+(4,"Commissions","account4",1),
+(5,"Depreciation","account5",1),
+(6,"Insurance","account6",1),
+(7,"Legal & professional fees","account7",1),
+(8,"Management fees","account8",1),
+(9,"Meal - C","account9",1),
+(10,"Mortgage interest","account10",1),
+(11,"Other interest","account11",1),
+(12,"Repairs","account12",1),
+(13,"Supplies","account13",1),
+(14,"Taxes","account14",1),
+(15,"Travel - C","account15",1),
+(16,"Utilities","account16",1),
+(17,"Other","account17",1);
+
+insert into businesses values
+(1,"Financial Service","money",1),
+(2,"153 Orange","more money",1),
+(3,"332 Robbins","red robin",1),
+(4,"207 Beacon","beacon",1);
+
+delete from businesses where business_id >= 1;
+
+insert into categories values 
+(1,"Advertising","cat1",1),
+(2,"Auto and travel - C & E","cat2",1),
+(3,"Cleaning & maintenance","cat3",1),
+(4,"Commissions","cat4",1),
+(5,"Depreciation","cat5",1),
+(6,"Dues/Subscription","cat6",1),
+(7,"Education","cat7",1),
+(8,"Furniture & Fixtures","cat8",1),
+(9,"Insurance","cat9",1),
+(10,"Legal & professional fees","cat10",1),
+(11,"License Fee","cat11",1),
+(12,"Machinery & Equipment","cat12",1),
+(13,"Management fees","cat13",1),
+(14,"Meal - C","cat14",1),
+(15,"Mortgage interest","cat15",1),
+(16,"Office Expense","cat16",1),
+(17,"Other interest","cat17",1),
+(18,"Outside Services","cat18",1),
+(19,"Phone/Cable/Internet","cat19",1),
+(20,"Postage","cat20",1),
+(21,"Promotions","cat21",1),
+(22,"Renovation","cat22",1),
+(23,"Repairs","cat23",1),
+(24,"Supplies","cat24",1),
+(25,"Taxes","cat25",1),
+(26,"Travel - C","cat26",1),
+(27,"Utilities","cat27",1)

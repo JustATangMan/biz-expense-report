@@ -19,12 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JPATests {
 
     @Autowired
+    private DefaultReferenceDataProvider rdp;
+    @Autowired
     private BizExpenseReportController bizExpenseReportController;
 
-    @Autowired
-    private DefaultReferenceDataProvider rdp;
-
-//    @BeforeAll
+    //    @BeforeAll
 //    void cleanup() {
 //        bizExpenseTransactionRepository.deleteAll();
 //    }
@@ -33,9 +32,9 @@ public class JPATests {
         rdp.deleteTransactions();
         File file = new File("src/test/resources/sheet.xlsx");
         assertEquals(bizExpenseReportController.uploadRawData(new MockMultipartFile("sheet.xlsx",
-                Files.readAllBytes(file.toPath())), 1).size(), 2);
+                Files.readAllBytes(file.toPath())), 1).size(), 7);
         List<Transaction> transactions = bizExpenseReportController.getRawData(1);
-        assertEquals(transactions.size(), 2);
+        assertEquals(transactions.size(), 7);
         assertEquals(transactions.get(0).getBusinessId(), 1);
     }
 
