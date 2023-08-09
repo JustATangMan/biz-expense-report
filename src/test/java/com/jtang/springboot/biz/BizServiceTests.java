@@ -19,9 +19,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.text.ParseException;
 import java.util.List;
@@ -29,10 +26,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-//TODO: remove springboottest, try @ExtendWith(MockitoExtension.class), mock repos, use
-// new call + constructor injection in @BeforeEach test (do data mocks "when(repo)" etc.)
-// experiment with @InjectMocks on RDP
-// then use new call to pass RDP into biz service
+//TODO: cleanup imports
 @ExtendWith(MockitoExtension.class)
 public class BizServiceTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultReferenceDataProvider.class);

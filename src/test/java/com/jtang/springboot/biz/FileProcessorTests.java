@@ -47,7 +47,7 @@ public class FileProcessorTests {
     @Mock
     private BizExpenseTransactionRepository transRepo;
     @InjectMocks
-    private DefaultReferenceDataProvider rdp = new DefaultReferenceDataProvider(accRepo,bizRepo,catRepo,catToAccRepo,taxRepo,transRepo);
+    private DefaultReferenceDataProvider rdp;
     private FileProcessorService fileProcessorService;
     private BizExpenseReportService bizExpenseReportService;
 

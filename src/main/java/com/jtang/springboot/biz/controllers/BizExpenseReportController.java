@@ -65,7 +65,8 @@ public class BizExpenseReportController {
     }
 
     //display summary
-    public ExpenseSummary displaySummary(int taxSeasonId) { //GET
+    @GetMapping("/summary/{taxSeasonId}")
+    public ExpenseSummary displaySummary(@PathVariable("taxSeasonId") int taxSeasonId) { //GET
         //select taxseason -> repo.get + calculate summary -> display
         return defaultBizExpenseReportService.getSummaryTable(taxSeasonId);
     }

@@ -60,6 +60,9 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
             Map<Account, Map<Business, Double>> summaryMap = summary.getSummary();
             // add each transaction's applied amount to correct account/business
             for (Transaction trans : transactions) {
+                if (trans.getAppliedAmount() == null || trans.getAppliedAmount() == 0.0) {
+                    continue;
+                }
                 Account account = accountMap.get(trans.getAccountId());
                 Business business = businessMap.get(trans.getBusinessId());
                 Double newAmount = summaryMap.get(account).get(business) + trans.getAppliedAmount();

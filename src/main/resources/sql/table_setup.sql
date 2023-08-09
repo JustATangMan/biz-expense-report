@@ -76,17 +76,6 @@ create table if not exists transactions (
     FOREIGN KEY (business_id) REFERENCES businesses(business_id)
 );
 
-alter table transactions auto_increment = 1;
-delete from transactions where transaction_id >= 1;
-select * from transactions;
-select * from accounts;
-select * from categories;
-select * from businesses;
-select * from tax_seasons;
-delete from accounts where account_id >= 1;
-delete from businesses where business_id >= 1;
-delete from categories where category_id >= 1;
-
 insert into accounts values 
 (1,"Advertising","account1",1),
 (2,"Auto and travel - C & E","account2",1),
@@ -111,8 +100,6 @@ insert into businesses values
 (2,"153 Orange","more money",1),
 (3,"332 Robbins","red robin",1),
 (4,"207 Beacon","beacon",1);
-
-delete from businesses where business_id >= 1;
 
 insert into categories values 
 (1,"Advertising","cat1",1),
