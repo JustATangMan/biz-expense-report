@@ -8,8 +8,8 @@ import com.jtang.springboot.biz.entities.Transaction;
 
 public interface FileProcessorService {
 
-    List<Transaction> readTransactions(InputStream stream);
+    List<Transaction> readTransactions(InputStream stream, int taxSeasonId);
 
-    List<Transaction> readTransactions(File file);
+    List<Transaction> readTransactions(File file, int taxSeasonId);
 	
 }

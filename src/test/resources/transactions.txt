@@ -1,0 +1,7 @@
+BoA-7797,01/04/2022,PSE&G NEW JERSEY Bill Payment,226.93,113.00,113.00,Utilities,Financial Service,Utilities
+BoA-7797,01/14/2022,EDISON WATER UTILITY Bill Payment,26.03,26.03,Utilities,153 Orange,Utilities
+BoA-7797,03/15/2022,City of Philadelphia Bill Payment,737.00,737.00,Taxes,332 Robbins,Taxes
+BoA-7797,05/25/2022,ZelleTony for Beacon clean sewer pipe etc.,3,500.00,2,200.00,2,200.00,Repairs,207 Beacon,Repairs,Steven
+BoA-7797,05/25/2022,ZelleTony for Beacon clean sewer pipe etc.,3,500.00,480.00,480.00,Cleaning & maintenance,207 Beacon,Cleaning & maintenance
+BoA-8211,04/11/2022,RAPIN FRITURA RESTAURANT NEWARK NJ,58.45,29.23,29.23,Meal - C,Financial Service,Meal - C
+BoA-8211,10/24/2022,OPTIMUM 7875 973-230-6046 NY,50.65,50.65,Phone/Cable/Internet,207 Beacon,Other

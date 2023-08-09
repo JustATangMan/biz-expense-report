@@ -1,0 +1,17 @@
+1,Advertising,account1,1
+2,Auto and travel - C & E,account2,1
+3,Cleaning & maintenance,account3,1
+4,Commissions,account4,1
+5,Depreciation,account5,1
+6,Insurance,account6,1
+7,Legal & professional fees,account7,1
+8,Management fees,account8,1
+9,Meal - C,account9,1
+10,Mortgage interest,account10,1
+11,Other interest,account11,1
+12,Repairs,account12,1
+13,Supplies,account13,1
+14,Taxes,account14,1
+15,Travel - C,account15,1
+16,Utilities,account16,1
+17,Other,account17,1

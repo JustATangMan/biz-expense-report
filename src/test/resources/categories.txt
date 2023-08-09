@@ -1,0 +1,27 @@
+1,Advertising,cat1,1
+2,Auto and travel - C & E,cat2,1
+3,Cleaning & maintenance,cat3,1
+4,Commissions,cat4,1
+5,Depreciation,cat5,1
+6,Dues/Subscription,cat6,1
+7,Education,cat7,1
+8,Furniture & Fixtures,cat8,1
+9,Insurance,cat9,1
+10,Legal & professional fees,cat10,1
+11,License Fee,cat11,1
+12,Machinery & Equipment,cat12,1
+13,Management fees,cat13,1
+14,Meal - C,cat14,1
+15,Mortgage interest,cat15,1
+16,Office Expense,cat16,1
+17,Other interest,cat17,1
+18,Outside Services,cat18,1
+19,Phone/Cable/Internet,cat19,1
+20,Postage,cat20,1
+21,Promotions,cat21,1
+22,Renovation,cat22,1
+23,Repairs,cat23,1
+24,Supplies,cat24,1
+25,Taxes,cat25,1
+26,Travel - C,cat26,1
+27,Utilities,cat27,1
