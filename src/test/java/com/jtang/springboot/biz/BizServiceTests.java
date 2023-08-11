@@ -2,20 +2,14 @@ package com.jtang.springboot.biz;
 
 import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.repo.*;
-import com.jtang.springboot.biz.service.BizExpenseReportService;
-import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import com.jtang.springboot.biz.service.TestDataGenerator;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,13 +62,31 @@ public class BizServiceTests {
             try {
                 transactions = tdg.createMockTransactions(false, 1);
                 when(transRepo.findByTaxSeasonId(1)).thenReturn(transactions);
-                ExpenseSummary summary = bizExpenseReportService.getSummaryTable(1);
-                System.out.println(summary);
+                ExpenseSummaryResponse summary = bizExpenseReportService.getSummaryTable(1);
                 assertEquals(summary.getSummary().keySet().size(), rdp.getAccounts(1).size());
-                assertEquals(summary.getSummary().get(rdp.getAccountFromName("Utilities", 1)).
-                        get(rdp.getBusinessFromName("153 Orange", 1)), 0.0);
-                assertEquals(summary.getSummary().get(rdp.getAccountFromName("Utilities", 1)).
-                        get(rdp.getBusinessFromName("Financial Service", 1)), 139.03);
+                assertEquals(summary.getSummary().get("Repairs").
+                        get("207 Beacon"), 2200.0);
+                assertEquals(summary.getSummary().get("Utilities").
+                        get("Financial Service"), 139.03);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    void testMissingAppliedAmountSummary() {
+        List<Transaction> transactions;
+        {
+            try {
+                transactions = tdg.createBadMockTransactions(false, 1);
+                when(transRepo.findByTaxSeasonId(1)).thenReturn(transactions);
+                ExpenseSummaryResponse summary = bizExpenseReportService.getSummaryTable(1);
+                assertEquals(summary.getSummary().keySet().size(), rdp.getAccounts(1).size());
+                assertEquals(summary.getSummary().get("Utilities").
+                        get("153 Orange"), 26.03);
+                assertEquals(summary.getSummary().get("Utilities").
+                        get("Financial Service"), 0.0);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }

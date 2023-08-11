@@ -3,6 +3,7 @@ package com.jtang.springboot.biz.service;
 import java.util.List;
 
 import com.jtang.springboot.biz.entities.ExpenseSummary;
+import com.jtang.springboot.biz.entities.ExpenseSummaryResponse;
 import com.jtang.springboot.biz.entities.Transaction;
 
 public interface BizExpenseReportService {
@@ -11,7 +12,7 @@ public interface BizExpenseReportService {
 	
 	List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId); //repo save
 	
-	ExpenseSummary getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
+	ExpenseSummaryResponse getSummaryTable(int taxSeasonId); //do aggregation logic return summary table
 
 	Transaction updateTransaction(Transaction transaction);
 

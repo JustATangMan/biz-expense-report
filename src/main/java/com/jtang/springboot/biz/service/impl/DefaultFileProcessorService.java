@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.jtang.springboot.biz.entities.Account;
+import com.jtang.springboot.biz.entities.Business;
+import com.jtang.springboot.biz.entities.Category;
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -45,6 +48,12 @@ public class DefaultFileProcessorService implements FileProcessorService {
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			for (Row row : sheet) { //loop through sheet, populate a transaction with each row
 				Transaction trans = new Transaction();
+				Account account = rdp.getAccountFromName(row.getCell(8).getStringCellValue(), taxSeasonId);
+				Business business = rdp.getBusinessFromName(row.getCell(7).getStringCellValue(), taxSeasonId);
+				Category category = rdp.getCategoryFromName(row.getCell(6).getStringCellValue(), taxSeasonId);
+				if (account == null || business == null || category == null) {
+					continue;
+				}
 				trans.setTaxSeason(taxSeasonId);
 				trans.setSource(row.getCell(0).getStringCellValue());
 				trans.setDate(row.getCell(1).getDateCellValue());
@@ -52,9 +61,9 @@ public class DefaultFileProcessorService implements FileProcessorService {
 				trans.setAmount(row.getCell(3).getNumericCellValue());
 				trans.setAdjustedAmount(row.getCell(4).getNumericCellValue());
 				trans.setAppliedAmount(row.getCell(5).getNumericCellValue());
-				trans.setCategoryId(rdp.getCategoryFromName(row.getCell(6).getStringCellValue(), taxSeasonId).getId()); // need to make refdataprovider for these
-				trans.setBusinessId(rdp.getBusinessFromName(row.getCell(7).getStringCellValue(), taxSeasonId).getId());
-				trans.setAccountId(rdp.getAccountFromName(row.getCell(8).getStringCellValue(), taxSeasonId).getId());
+				trans.setCategoryId(category.getId()); // need to make refdataprovider for these
+				trans.setBusinessId(business.getId());
+				trans.setAccountId(account.getId());
 //				trans.setNotes(row.getCell(9).getStringCellValue());
 				transactions.add(trans);
 			}

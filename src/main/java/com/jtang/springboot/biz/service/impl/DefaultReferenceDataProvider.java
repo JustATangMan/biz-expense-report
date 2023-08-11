@@ -47,8 +47,8 @@ public class DefaultReferenceDataProvider implements ReferenceDataProvider {
 		this.catToAccRepo = catToAccRepo;
 		this.taxRepo = taxRepo;
 		this.transRepo = transRepo;
-		LOGGER.info("************** accRepo is null? {} {} {} {} {} {} ", accRepo == null, bizRepo == null
-		, catRepo == null, catToAccRepo == null, taxRepo == null, transRepo == null);
+//		LOGGER.info("************** accRepo is null? {} {} {} {} {} {} ", accRepo == null, bizRepo == null
+//		, catRepo == null, catToAccRepo == null, taxRepo == null, transRepo == null);
 	}
 
 	@Override
