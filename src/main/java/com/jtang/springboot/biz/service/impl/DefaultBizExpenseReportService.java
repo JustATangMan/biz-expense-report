@@ -23,7 +23,7 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
 
     public DefaultBizExpenseReportService(DefaultReferenceDataProvider rdp) {
         this.rdp = rdp;
-        LOGGER.info("****** rdp is null? {}", rdp == null);
+//        LOGGER.info("****** rdp is null? {}", rdp == null);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
     } // test
 
     @Override
-    public ExpenseSummary getSummaryTable(int taxSeasonId) {
+    public ExpenseSummaryResponse getSummaryTable(int taxSeasonId) {
         // get given tax season; validate tax season
         List<TaxSeason> taxes = rdp.getTaxSeasons(taxSeasonId);
         if (taxSeasonId < 0 || taxes.isEmpty()) {
@@ -69,7 +69,8 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
                 summaryMap.get(account).put(business, newAmount);
             }
             summary.setSummary(summaryMap);
-            return summary;
+            ExpenseSummaryResponse esr = new ExpenseSummaryResponse();
+            return esr.from(summary);
         }
     }
 
