@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+please upload transactions
+<form method=post th:action="@{/upload}" enctype="multipart/form-data">
+    <input name="taxSeasonId" type="number">
+    <input name="file" type="file">
+    <input type="submit">
+</form>
+<!--dropdown for tax seasons-->
+</body>
+</html>

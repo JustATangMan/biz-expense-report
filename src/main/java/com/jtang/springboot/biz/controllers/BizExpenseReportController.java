@@ -6,11 +6,13 @@ import java.util.List;
 import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jtang.springboot.biz.service.FileProcessorService;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @Transactional
@@ -24,7 +26,7 @@ public class BizExpenseReportController {
 
     //home page
 
-    //upload
+//    upload
 
     /**
      * Takes a raw data Excel file and saves it to the database for a given tax season
@@ -34,8 +36,8 @@ public class BizExpenseReportController {
      * @return String indicating upload status
      * @throws IOException Error when processing file
      */
-    @PostMapping(value="/upload/{id}")
-    public List<Transaction> uploadRawData(@RequestBody MultipartFile file, @PathVariable("id") int taxSeasonId) throws IOException { //GET & POST
+    @PostMapping(value="/upload")
+    public List<Transaction> uploadRawData(@RequestBody @RequestParam(name="file") MultipartFile file, @RequestParam(name="taxSeasonId") int taxSeasonId) throws IOException { //GET & POST
         defaultBizExpenseReportService.deleteRawData(taxSeasonId);
         List<Transaction> transactions = fileProcessorService.readTransactions(file.getInputStream(), taxSeasonId);
         return defaultBizExpenseReportService.saveTransactions(transactions, taxSeasonId);
