@@ -184,7 +184,7 @@ public class TestDataGenerator {
                 if (account == null || business == null || category == null) {
                     continue;
                 }
-                trans.setTaxSeason(taxSeasonId);
+                trans.setTaxSeasonId(taxSeasonId);
                 trans.setSource(row.getCell(0).getStringCellValue());
                 trans.setDate(row.getCell(1).getDateCellValue());
                 trans.setDescription(row.getCell(2).getStringCellValue());
@@ -218,7 +218,7 @@ public class TestDataGenerator {
                 if (account == null || business == null || category == null) {
                     continue;
                 }
-                trans.setTaxSeason(taxSeasonId);
+                trans.setTaxSeasonId(taxSeasonId);
                 trans.setSource(row.getCell(0).getStringCellValue());
                 trans.setDate(row.getCell(1).getDateCellValue());
                 trans.setDescription(row.getCell(2).getStringCellValue());

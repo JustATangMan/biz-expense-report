@@ -129,10 +129,10 @@ public class Transaction { // each row in the rawdata table
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public int getTaxSeason() {
+	public int getTaxSeasonId() {
 		return taxSeasonId;
 	}
-	public void setTaxSeason(int taxSeason) {
+	public void setTaxSeasonId(int taxSeason) {
 		this.taxSeasonId = taxSeason;
 	}
 

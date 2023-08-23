@@ -45,9 +45,11 @@ public interface ReferenceDataProvider {
 
     public List<TaxSeason> getTaxSeasons(int taxSeasonId);
 
-    public Transaction findById(int id, int taxSeasonId);
+    public Transaction findById(int id);
 
     public List<Transaction> saveTransactions(List<Transaction> rawData);
+
+    public Transaction saveTransaction(Transaction transaction);
 
     public void deleteTransactions(int taxSeasonId);
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+Display transactions for tax season:
+<form method=post th:action="@{/displayTransactions}">
+    <input name="taxSeasonId" type="number">
+    <input type="submit">
+</form>
+</body>
+</html>

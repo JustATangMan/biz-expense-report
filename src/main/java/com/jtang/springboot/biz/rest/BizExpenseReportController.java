@@ -1,4 +1,4 @@
-package com.jtang.springboot.biz.controllers;
+package com.jtang.springboot.biz.rest;
 
 import java.io.*;
 import java.util.List;
@@ -6,13 +6,11 @@ import java.util.List;
 import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jtang.springboot.biz.service.FileProcessorService;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @Transactional
@@ -66,9 +64,16 @@ public class BizExpenseReportController {
         //update database for given transaction
     }
 
+    @PostMapping(value="/updateTransactions")
+    public List<Transaction> updateTransactions(@RequestBody List<Transaction> transactions) { //POST
+        //check if id is valid (exists to be updated)
+        return defaultBizExpenseReportService.saveTransactions(transactions, transactions.get(0).getTaxSeasonId());
+        //update database for given transaction
+    }
+
     //display summary
-    @GetMapping("/summary/{taxSeasonId}")
-    public ExpenseSummaryResponse displaySummary(@PathVariable("taxSeasonId") int taxSeasonId) { //GET
+    @GetMapping("/summary/")
+    public ExpenseSummaryResponse displaySummary(@RequestParam("taxSeasonId") int taxSeasonId) { //GET
         //select taxseason -> repo.get + calculate summary -> display
         return defaultBizExpenseReportService.getSummaryTable(taxSeasonId);
     }

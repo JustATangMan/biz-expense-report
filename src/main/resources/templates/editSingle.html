@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <form method="post" th:action="@{/editSingle}" th:object="${response}">
+        <table>
+            <tr>
+                <th>Source</th>
+                <td><input type="text" th:field="*{transaction.source}"></td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td><input type="text" th:field="*{transaction.date}"></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td><input type="text" th:field="*{transaction.description}"></td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td><input type="number" th:field="*{transaction.amount}"></td>
+            </tr>
+            <tr>
+                <th>Adjusted Amount</th>
+                <td><input type="number" th:field="*{transaction.adjustedAmount}"></td>
+            </tr>
+            <tr>
+                <th>Applied Amount</th>
+                <td><input type="number" th:field="*{transaction.appliedAmount}"></td>
+            </tr>
+            <tr>
+                <th>Account Id</th>
+                <td><input type="number" th:field="*{transaction.accountId}"></td>
+            </tr>
+            <tr>
+                <th>Business Id</th>
+                <td><input type="number" th:field="*{transaction.businessId}"></td>
+            </tr>
+            <tr>
+                <th>Category Id</th>
+                <td><input type="number" th:field="*{transaction.categoryId}"></td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td><input type="text" th:field="*{transaction.notes}"></td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td><input type="number" th:field="*{transaction.id}"></td>
+            </tr>
+            <tr>
+                <th>Tax Id</th>
+                <td><input type="number" th:field="*{transaction.taxSeasonId}"></td>
+            </tr>
+        </table>
+
+        <input type="submit">
+    </form>
+
+    <table id="accounts" border="1">
+        <thead>
+        <tr>
+            <th>Account Id</th>
+            <th>Account Name</th>
+        </tr>
+        </thead>
+        <tr th:each="account : ${payload.accIdToName}">
+            <td th:text="${account.key}"></td>
+            <td th:text="${account.value}"></td>
+        </tr>
+    </table>
+
+    <table id="businesses" border="1">
+        <thead>
+        <tr>
+            <th>Business Id</th>
+            <th>Business Name</th>
+        </tr>
+        </thead>
+        <tr th:each="business : ${payload.bizIdToName}">
+            <td th:text="${business.key}"></td>
+            <td th:text="${business.value}"></td>
+        </tr>
+    </table>
+
+    <table id="categories" border="1">
+        <thead>
+        <tr>
+            <th>Category Id</th>
+            <th>Category Name</th>
+        </tr>
+        </thead>
+        <tr th:each="category : ${payload.catIdToName}">
+            <td th:text="${category.key}"></td>
+            <td th:text="${category.value}"></td>
+        </tr>
+    </table>
+</body>
+</html>
