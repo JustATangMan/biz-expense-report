@@ -1,6 +1,7 @@
 package com.jtang.springboot.biz.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.slf4j.Logger;
@@ -139,15 +140,18 @@ public class DefaultReferenceDataProvider implements ReferenceDataProvider {
 	}
 
 	@Override
-	public Transaction findById(int id, int taxSeasonId) {
-		var transactionList = getTransactions(taxSeasonId).stream().filter(t -> t.getId() == id).toList();
-		return transactionList.size() > 0 ? transactionList.get(0) : null;
+	public Transaction findById(int id) {
+		Optional<Transaction> transaction = transRepo.findById(id);
+		return !transaction.isEmpty() ? transaction.get() : null;
 	}
 
 	@Override
 	public List<Transaction> saveTransactions(List<Transaction> rawData) {
 		return transRepo.saveAll(rawData);
 	}
+
+	@Override
+	public Transaction saveTransaction(Transaction transaction) { return transRepo.save(transaction); }
 
 	@Override
 	public void deleteTransactions(int taxSeasonId) {

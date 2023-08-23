@@ -1,13 +1,13 @@
 package com.jtang.springboot.biz.service.impl;
 
+import com.jtang.springboot.biz.controllers.TransactionResponsePayload;
 import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.service.BizExpenseReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,11 +34,37 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
     @Override
     public List<Transaction> saveTransactions(List<Transaction> rawData, int taxSeasonId) {
         for (Transaction trans : rawData) {
-            trans.setTaxSeason(taxSeasonId);
+            trans.setTaxSeasonId(taxSeasonId);
         }
         List<Transaction> transactions = rdp.saveTransactions(rawData);
         return transactions;
     } // test
+
+    @Override
+    public TransactionResponsePayload getTransactionResponsePayload(List<Transaction> transactions) {
+        Map<Integer, String> accIdToName = new HashMap<>();
+        Map<Integer, String> bizIdToName = new HashMap<>();
+        Map<Integer, String> catIdToName = new HashMap<>();
+        List<TransactionResponse> responses = transactions.stream().map(t ->
+                {
+                    if (accIdToName.get(t.getAccountId()) == null) {
+                        accIdToName.put(t.getAccountId(), rdp.getAccountFromId(t.getAccountId(), t.getTaxSeasonId()).getName());
+                    }
+                    if (bizIdToName.get(t.getBusinessId()) == null) {
+                        bizIdToName.put(t.getBusinessId(), rdp.getBusinessFromId(t.getBusinessId(), t.getTaxSeasonId()).getName());
+                    }
+                    if (catIdToName.get(t.getCategoryId()) == null) {
+                        catIdToName.put(t.getCategoryId(), rdp.getCategoryFromId(t.getCategoryId(), t.getTaxSeasonId()).getName());
+                    }
+                    return new TransactionResponse(t,
+                            accIdToName.get(t.getAccountId()),
+                            bizIdToName.get(t.getBusinessId()),
+                            catIdToName.get(t.getCategoryId()));
+                }).toList();
+        // cache fetched names in map
+        // transactions -> transactionDisplays
+        return new TransactionResponsePayload(responses, accIdToName, bizIdToName, catIdToName);
+    }
 
     @Override
     public ExpenseSummaryResponse getSummaryTable(int taxSeasonId) {
@@ -75,13 +101,16 @@ public class DefaultBizExpenseReportService implements BizExpenseReportService {
     }
 
     @Override
+    public Transaction getSingleTransactionById(int id) {
+        return rdp.findById(id);
+    }
+
+    @Override
     public Transaction updateTransaction(Transaction transaction) {
-        if (rdp.findById(transaction.getId(), transaction.getTaxSeason()) == null) {
+        if (rdp.findById(transaction.getId()) == null) {
             throw new RuntimeException("Invalid transaction id: " + transaction.getId());
         }
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(transaction);
-        return rdp.saveTransactions(transactions).get(0);
+        return rdp.saveTransaction(transaction);
     }
 
     @Override

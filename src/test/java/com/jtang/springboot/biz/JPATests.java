@@ -1,6 +1,6 @@
 package com.jtang.springboot.biz;
 
-import com.jtang.springboot.biz.controllers.BizExpenseReportController;
+import com.jtang.springboot.biz.rest.BizExpenseReportController;
 import com.jtang.springboot.biz.entities.Transaction;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
 import org.junit.jupiter.api.Test;

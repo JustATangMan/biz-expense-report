@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+  <form method="post" th:action="@{/summary}" th:object="${transactions}">
+<!--    edit individual row -> edit link -> -->
+    <table border="1">
+      <thead class="bg-info">
+        <tr>
+          <th>Source</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Adjusted Amount</th>
+          <th>Applied Amount</th>
+          <th>Account</th>
+          <th style="display:none">accid</th>
+          <th>Business</th>
+          <th style="display:none">bizid</th>
+          <th>Category</th>
+          <th style="display:none">catid</th>
+          <th>Id</th>
+        </tr>
+      <tr th:each="t : ${payload.transactionResponses}">
+        <td th:text="${t.transaction.source}"></td>
+        <td th:text="${t.transaction.date}"></td>
+        <td th:text="${t.transaction.description}"></td>
+        <td th:text="${t.transaction.amount}"></td>
+        <td th:text="${t.transaction.adjustedAmount}"></td>
+        <td th:text="${t.transaction.appliedAmount}"></td>
+        <td th:text="${t.accountName}"></td>
+        <td style="display:none" th:text="${t.transaction.accountId}" ></td>
+        <td th:text="${t.businessName}"></td>
+        <td style="display:none" th:text="${t.transaction.businessId}"></td>
+        <td th:text="${t.categoryName}"></td>
+        <td style="display:none" th:text="${t.transaction.categoryId}"></td>
+        <td th:text="${t.transaction.id}"></td>
+        <td>
+          <a th:href="@{/editSingle/{id}/{tax}(id=${t.transaction.id},tax=${t.transaction.taxSeasonId})}">Edit</a>
+        </td>
+      </tr>
+      </thead>
+    </table>
+    <input style="display:none" name="taxSeasonId" type="number">
+  </form>
+  <table id="accounts" border="1">
+    <thead>
+    <tr>
+      <th>Account Id</th>
+      <th>Account Name</th>
+    </tr>
+    </thead>
+    <tr th:each="account : ${payload.accIdToName}">
+      <td th:text="${account.key}"></td>
+      <td th:text="${account.value}"></td>
+    </tr>
+  </table>
+
+  <table id="businesses" border="1">
+    <thead>
+    <tr>
+      <th>Business Id</th>
+      <th>Business Name</th>
+    </tr>
+    </thead>
+    <tr th:each="business : ${payload.bizIdToName}">
+      <td th:text="${business.key}"></td>
+      <td th:text="${business.value}"></td>
+    </tr>
+  </table>
+
+  <table id="categories" border="1">
+    <thead>
+    <tr>
+      <th>Category Id</th>
+      <th>Category Name</th>
+    </tr>
+    </thead>
+    <tr th:each="category : ${payload.catIdToName}">
+      <td th:text="${category.key}"></td>
+      <td th:text="${category.value}"></td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -11,7 +11,6 @@ import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jtang.springboot.biz.entities.Transaction;
@@ -54,7 +53,7 @@ public class DefaultFileProcessorService implements FileProcessorService {
 				if (account == null || business == null || category == null) {
 					continue;
 				}
-				trans.setTaxSeason(taxSeasonId);
+				trans.setTaxSeasonId(taxSeasonId);
 				trans.setSource(row.getCell(0).getStringCellValue());
 				trans.setDate(row.getCell(1).getDateCellValue());
 				trans.setDescription(row.getCell(2).getStringCellValue());
