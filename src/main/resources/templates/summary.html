@@ -3,19 +3,21 @@
 <head>
 </head>
 <body>
-  <table border="1">
+<div th:replace="~{common :: navbar}"></div>
+<br>
+<table border="1">
     <tr th:each="accountToMap : ${summaryPayload.summary}" th:if="${accountToMapStat.index == 0}">
-      <td></td>
-      <td th:each="businessToInt : ${accountToMap.value}">
-        <div th:text="${businessToInt.key}"></div>
-      </td>
+        <td></td>
+        <td th:each="businessToInt : ${accountToMap.value}">
+            <div th:text="${businessToInt.key}"></div>
+        </td>
     </tr>
     <tr th:each="accountToMap : ${summaryPayload.summary}">
-      <td th:text="${accountToMap.key}"></td>
-      <td th:each="businessToInt : ${accountToMap.value}">
-        <div th:text="${businessToInt.value}"></div>
-      </td>
+        <td th:text="${accountToMap.key}"></td>
+        <td th:each="businessToInt : ${accountToMap.value}">
+            <div th:text="${businessToInt.value}"></div>
+        </td>
     </tr>
-  </table>
+</table>
 </body>
 </html>

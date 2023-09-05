@@ -58,11 +58,6 @@ public class WebController {
         return displayTransactions(model, request);
     }
 
-    @RequestMapping("/taxSeasonEntry") // set taxseason cookie
-    public String taxSeasonEntry() {
-        return "taxSeasonEntry";
-    }
-
     @RequestMapping("/displayTransactions") // rename to display
     public String displayTransactions(Model model, HttpServletRequest request) {
         //call bizreportservice getTransactionResponse

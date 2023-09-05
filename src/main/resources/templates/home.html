@@ -3,14 +3,14 @@
 <head>
 </head>
 <body>
-Home Page
-    <form method="post" th:action="@{/home}">
-        <input name="taxSeasonId" type="number"> Input tax season id cookie
-        <input type="submit">
-    </form>
-    <a th:href="@{/uploadTransactions}"><input type="button" value="Upload Raw Data"></a>
-    <a th:href="@{/displayTransactions}"><input type="button" value="Display Raw Data"></a>
-    <a th:href="@{/summary}"><input type="button" value="Get Summary Table"></a>
+<div th:replace="~{common :: navbar}"></div>
+<br>
+Input Tax Season Id Cookie
+<form method="post" th:action="@{/home}">
+    <input name="taxSeasonId" type="number">
+    <br>
+    <input type="submit">
+</form>
 
 
 </body>

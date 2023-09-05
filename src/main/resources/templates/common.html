@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="navbar">
+        <a th:href="@{/}"><input type="button" value="Set Tax Season"></a>
+        <a th:href="@{/uploadTransactions}"><input type="button" value="Upload Raw Data"></a>
+        <a th:href="@{/displayTransactions}"><input type="button" value="Display Raw Data"></a>
+        <a th:href="@{/summary}"><input type="button" value="Get Summary Table"></a>
+    </div>
+</body>
+</html>

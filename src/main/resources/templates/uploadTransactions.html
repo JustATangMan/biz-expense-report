@@ -4,10 +4,13 @@
 
 </head>
 <body>
-please upload transactions
+<div th:replace="~{common :: navbar}"></div>
+<br>
+Upload for tax season:
 <form method=post th:action="@{/uploadToDisplay}" enctype="multipart/form-data">
     <input name="taxSeasonId" type="number">
     <input name="file" type="file">
+    <br>
     <input type="submit">
 </form>
 <!--dropdown for tax seasons-->
