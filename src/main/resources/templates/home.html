@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+</head>
+<body>
+Home Page
+    <form method="post" th:action="@{/home}">
+        <input name="taxSeasonId" type="number"> Input tax season id cookie
+        <input type="submit">
+    </form>
+    <a th:href="@{/uploadTransactions}"><input type="button" value="Upload Raw Data"></a>
+    <a th:href="@{/displayTransactions}"><input type="button" value="Display Raw Data"></a>
+    <a th:href="@{/summary}"><input type="button" value="Get Summary Table"></a>
+
+
+</body>
+</html>
