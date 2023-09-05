@@ -37,7 +37,7 @@
         <td style="display:none" th:text="${t.transaction.categoryId}"></td>
         <td th:text="${t.transaction.id}"></td>
         <td>
-          <a th:href="@{/editSingle/{id}/{tax}(id=${t.transaction.id},tax=${t.transaction.taxSeasonId})}">Edit</a>
+          <a th:href="@{/editSingle/{id}(id=${t.transaction.id})}">Edit</a>
         </td>
       </tr>
       </thead>

@@ -5,7 +5,7 @@
 </head>
 <body>
 please upload transactions
-<form method=post th:action="@{/upload}" enctype="multipart/form-data">
+<form method=post th:action="@{/uploadToDisplay}" enctype="multipart/form-data">
     <input name="taxSeasonId" type="number">
     <input name="file" type="file">
     <input type="submit">
