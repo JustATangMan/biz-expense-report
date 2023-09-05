@@ -3,7 +3,9 @@
 <head>
 </head>
 <body>
-    <form method="post" th:action="@{/editSingle}" th:object="${response}">
+<div th:replace="~{common :: navbar}"></div>
+<br>
+<form method="post" th:action="@{/editSingle}" th:object="${response}">
         <table>
             <tr>
                 <th>Source</th>

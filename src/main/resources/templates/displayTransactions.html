@@ -3,6 +3,8 @@
 <head>
 </head>
 <body>
+<div th:replace="~{common :: navbar}"></div>
+<br>
   <form method="post" th:action="@{/summary}" th:object="${transactions}">
 <!--    edit individual row -> edit link -> -->
     <table border="1">
