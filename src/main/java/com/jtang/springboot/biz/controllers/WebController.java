@@ -39,7 +39,6 @@ public class WebController {
         return "home";
     }
 
-
     @RequestMapping("/uploadTransactions")
     public String uploadTransactions(HttpServletRequest request) {
         if (getTaxSeasonId(request) < 0) {
