@@ -17,7 +17,23 @@ A Java Spring Boot web application to calculate a pivot table for tax returns, g
 The application consists of buttons and editable text/number fields. To use:
 * Navigate to the home page and select a tax season id
   * This sets a browser cookie for the rest of the session; all data will be taken from this tax season
+  <picture>
+    <img alt="home" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/home.png">
+  </picture>
 * Upload data through the upload page; data must be in an Excel file
+  <picture>
+    <img alt="upload" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/upload.png">
+  </picture>
 * Display the data for a given tax season
+  <picture>
+    <img alt="display" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/display.png">
+  </picture>
 * Edit individual transactions if necessary
+
+  <picture>
+    <img alt="edit" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/edit.png">
+  </picture>
 * Calculate and display the summary table for a given tax season
+  <picture>
+    <img alt="summary" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/summary.png">
+  </picture>
