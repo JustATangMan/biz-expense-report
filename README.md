@@ -28,9 +28,7 @@ The application consists of buttons and editable text/number fields. To use:
 * Edit individual transactions if necessary
 
   <picture>
-    <img alt="edit" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/edit.png">
   </picture>
 * Calculate and display the summary table for a given tax season
   <picture>
-    <img alt="summary" src="https://github.com/JustATangMan/biz-expense-report/blob/main/docs/summary.png">
   </picture>
