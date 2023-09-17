@@ -17,7 +17,18 @@ A Java Spring Boot web application to calculate a pivot table for tax returns, g
 The application consists of buttons and editable text/number fields. To use:
 * Navigate to the home page and select a tax season id
   * This sets a browser cookie for the rest of the session; all data will be taken from this tax season
+  <picture>
+  </picture>
 * Upload data through the upload page; data must be in an Excel file
+  <picture>
+  </picture>
 * Display the data for a given tax season
+  <picture>
+  </picture>
 * Edit individual transactions if necessary
+
+  <picture>
+  </picture>
 * Calculate and display the summary table for a given tax season
+  <picture>
+  </picture>
