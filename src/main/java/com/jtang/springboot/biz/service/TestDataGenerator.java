@@ -18,7 +18,6 @@ public class TestDataGenerator {
     private static File accountsFile = new File("src/test/resources/accounts.txt");
     private static File categoriesFile = new File("src/test/resources/categories.txt");
     private static File transactionsFile = new File("src/test/resources/sheet.xlsx");
-    private static File badTransactionsFile = new File("src/test/resources/badsheet.xlsx");
     private static File missingAppliedFile = new File("src/test/resources/missing_applied_amount.xlsx");
 
     public List<Account> createMockAccounts() {
@@ -46,25 +45,25 @@ public class TestDataGenerator {
         Business biz = new Business();
         biz.setId(1);
         biz.setDescription("money");
-        biz.setName("Financial Service");
+        biz.setName("Business 1");
         biz.setTaxSeason(1);
 
         Business biz2 = new Business();
         biz2.setId(2);
         biz2.setDescription("more money");
-        biz2.setName("153 Orange");
+        biz2.setName("Business 2");
         biz2.setTaxSeason(1);
 
         Business biz3 = new Business();
         biz3.setId(3);
         biz3.setDescription("reeeeed robin");
-        biz3.setName("332 Robbins");
+        biz3.setName("Business 3");
         biz3.setTaxSeason(1);
 
         Business biz4 = new Business();
         biz4.setId(4);
         biz4.setDescription("beacon");
-        biz4.setName("207 Beacon");
+        biz4.setName("Business 4");
         biz4.setTaxSeason(1);
 
         businesses.add(biz);

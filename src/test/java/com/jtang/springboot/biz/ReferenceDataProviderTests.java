@@ -1,13 +1,11 @@
 package com.jtang.springboot.biz;
 
-import java.io.File;
 import java.text.ParseException;
 import java.util.List;
 
 import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.repo.*;
 import com.jtang.springboot.biz.service.BizExpenseReportService;
-import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import com.jtang.springboot.biz.service.impl.DefaultFileProcessorService;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
@@ -20,11 +18,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.jtang.springboot.biz.service.FileProcessorService;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -82,8 +77,8 @@ class ReferenceDataProviderTests {
 	@Test
 	void testRDPBusiness() {
 		when(bizRepo.findByTaxSeasonId(1)).thenReturn(businesses);
-		assertEquals(rdp.getBusinessFromId(1, 1).getName(), "Financial Service");
-		assertEquals(rdp.getBusinessFromName("153 Orange", 1).getDescription(), "more money");
+		assertEquals(rdp.getBusinessFromId(1, 1).getName(), "Business 1");
+		assertEquals(rdp.getBusinessFromName("Business 2", 1).getDescription(), "more money");
 		assertNull(rdp.getBusinessFromId(5, 1));
 	}
 

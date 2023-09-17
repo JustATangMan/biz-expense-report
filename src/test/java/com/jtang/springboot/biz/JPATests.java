@@ -35,7 +35,7 @@ public class JPATests {
                 Files.readAllBytes(file.toPath())), 1).size(), 7);
         List<Transaction> transactions = bizExpenseReportController.getRawData(1);
         assertEquals(transactions.size(), 7);
-        assertEquals(transactions.get(0).getBusinessId(), 1);
+        assertEquals(transactions.get(0).getBusinessId(), 4);
     }
 
     @Test

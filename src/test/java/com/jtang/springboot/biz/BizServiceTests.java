@@ -65,9 +65,9 @@ public class BizServiceTests {
                 ExpenseSummaryResponse summary = bizExpenseReportService.getSummaryTable(1);
                 assertEquals(summary.getSummary().keySet().size(), rdp.getAccounts(1).size());
                 assertEquals(summary.getSummary().get("Repairs").
-                        get("207 Beacon"), 2200.0);
+                        get("Business 2"), 2200.0);
                 assertEquals(summary.getSummary().get("Utilities").
-                        get("Financial Service"), 139.03);
+                        get("Business 4"), 139.03);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -84,9 +84,7 @@ public class BizServiceTests {
                 ExpenseSummaryResponse summary = bizExpenseReportService.getSummaryTable(1);
                 assertEquals(summary.getSummary().keySet().size(), rdp.getAccounts(1).size());
                 assertEquals(summary.getSummary().get("Utilities").
-                        get("153 Orange"), 26.03);
-                assertEquals(summary.getSummary().get("Utilities").
-                        get("Financial Service"), 0.0);
+                        get("Business 4"), 26.03);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }

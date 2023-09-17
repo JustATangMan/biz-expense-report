@@ -4,12 +4,10 @@ import com.jtang.springboot.biz.entities.*;
 import com.jtang.springboot.biz.repo.*;
 import com.jtang.springboot.biz.service.BizExpenseReportService;
 import com.jtang.springboot.biz.service.FileProcessorService;
-import com.jtang.springboot.biz.service.ReferenceDataProvider;
 import com.jtang.springboot.biz.service.TestDataGenerator;
 import com.jtang.springboot.biz.service.impl.DefaultBizExpenseReportService;
 import com.jtang.springboot.biz.service.impl.DefaultFileProcessorService;
 import com.jtang.springboot.biz.service.impl.DefaultReferenceDataProvider;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,14 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,7 +45,7 @@ public class FileProcessorTests {
     private BizExpenseReportService bizExpenseReportService;
 
     File file = new File("src/test/resources/sheet.xlsx");
-    File badFile = new File("src/test/resources/badsheet.xlsx");
+    File badFile = new File("src/test/resources/missing_applied_amount.xlsx");
     private TestDataGenerator tdg = new TestDataGenerator();
     List<Account> accounts = tdg.createMockAccounts();
     List<Business> businesses = tdg.createMockBusinesses();

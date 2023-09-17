@@ -96,10 +96,10 @@ insert into accounts values
 (17,"Other","account17",1);
 
 insert into businesses values
-(1,"Financial Service","money",1),
-(2,"153 Orange","more money",1),
-(3,"332 Robbins","red robin",1),
-(4,"207 Beacon","beacon",1);
+(1,"Business 1","money",1),
+(2,"Business 2","more money",1),
+(3,"Business 3","red robin",1),
+(4,"Business 4","beacon",1);
 
 insert into categories values 
 (1,"Advertising","cat1",1),
