@@ -1,3 +1,5 @@
+create schema if not exists biz_expense;
+
 use biz_expense;
 
 drop table if exists transactions;
@@ -75,6 +77,9 @@ create table if not exists transactions (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id),
     FOREIGN KEY (business_id) REFERENCES businesses(business_id)
 );
+
+insert into tax_seasons values
+(1, "Tax season 1", 2023, "first tax season");
 
 insert into accounts values 
 (1,"Advertising","account1",1),
