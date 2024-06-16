@@ -7,7 +7,7 @@ drop table if exists businesses;
 drop table if exists category_to_account;
 drop table if exists accounts;
 drop table if exists categories;
-drop table if exists tax_season;
+drop table if exists tax_seasons;
 
 create database if not exists biz_expense;
 

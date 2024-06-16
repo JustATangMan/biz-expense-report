@@ -1,19 +1,46 @@
 version: "3.8"
 services:
-  db:
-    image: mysql
+#  db:
+#    image: mysql
+#    ports:
+#      - "3306:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: RootDock@SQL
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+#      timeout: 20s
+#      retries: 10
+#    hostname: blahblah
+#    volumes:
+#      - ./src/main/resources/sql/table_setup.sql:/script/table_setup.sql:ro
+#    command: "--init-file /script/table_setup.sql"
+#    networks:
+#      - local_bridge
+  postgresdb:
+    image: postgres
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: RootDock@SQL
+      POSTGRES_PASSWORD: RootDock@SQL
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       timeout: 20s
       retries: 10
     hostname: blahblah
     volumes:
       - ./src/main/resources/sql/table_setup.sql:/script/table_setup.sql:ro
     command: "--init-file /script/table_setup.sql"
+    networks:
+      - local_bridge
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: RootDock@SQL
     networks:
       - local_bridge
 
@@ -24,7 +51,7 @@ services:
     environment:
       HOSTNAME: blahblah
     depends_on:
-      db:
+      postgresdb:
         condition: service_healthy
     networks:
       - local_bridge
